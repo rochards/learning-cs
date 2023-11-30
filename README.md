@@ -1,1 +1,1 @@
-My Computer Science related stuff path
+# My computer science-related stuff learning path
