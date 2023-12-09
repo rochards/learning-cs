@@ -20,5 +20,5 @@ Here are some key points to remember about lists in Kotlin:
 - You also can access elements by index;
 - Accessing any element has a time complexity of O(1);
 - Changing the value at a specific index it's also O(1);
-- Adding a new element to the end of the list (only for applicable the mutable ones) has a time complexity of O(1). Occasionally, resizing the list to fit new elements may be necessary, which takes O(n) because it involves creating a new array and copying the existing elements to it. However, this resizing operation happens so rarely that it's considered an amortized time of O(1). Head to [this link](https://medium.com/@satorusasozaki/amortized-time-in-the-time-complexity-of-an-algorithm-6dd9a5d38045) for a more in-depth explanation;
+- Adding a new element to the end of the list (only applicable for the mutable ones) has a time complexity of O(1). Occasionally, resizing the list to fit new elements may be necessary, which takes O(n) because it involves creating a new array and copying the existing elements to it. However, this resizing operation happens so rarely that it's considered an amortized time of O(1). Head to [this link](https://medium.com/@satorusasozaki/amortized-time-in-the-time-complexity-of-an-algorithm-6dd9a5d38045) for a more in-depth explanation;
 - (todo): talk about inserting element in any position
