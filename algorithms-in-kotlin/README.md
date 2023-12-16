@@ -22,3 +22,6 @@ Here are some key points to remember about lists in Kotlin:
 - Changing the value at a specific index it's also O(1);
 - Adding a new element to the end of the list (only applicable for the mutable ones) has a time complexity of O(1). Occasionally, resizing the list to fit new elements may be necessary, which takes O(n) because it involves creating a new array and copying the existing elements to it. However, this resizing operation happens so rarely that it's considered an amortized time of O(1). Head to [this link](https://medium.com/@satorusasozaki/amortized-time-in-the-time-complexity-of-an-algorithm-6dd9a5d38045) for a more in-depth explanation;
 - Adding a new element anywhere in the list, except at the end, has a time complexity of O(n) because it involves shifting all the other elements after the insertion point.
+
+#### Practice with Array Problems on LeetCode
+- [1920. Build Array from Permutation](https://leetcode.com/problems/build-array-from-permutation/) - :slightly_smiling_face:
