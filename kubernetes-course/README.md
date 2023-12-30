@@ -4,7 +4,7 @@ Click https://www.youtube.com/watch?v=d6WC5n9G_sM to access the full Youtube cou
 
 Refer to the glossary in this link https://kubernetes.io/docs/reference/glossary/?fundamental=true whenever you encounter terms like Pod, Node, etc.
 
-`kubectl` is the CLI for Kubernetes cluster management. To learn how to use it always consult the documentation https://kubernetes.io/docs/reference/kubectl/
+`kubectl` is the CLI for Kubernetes cluster management. To learn how to use it always consult the documentation https://kubernetes.io/docs/reference/kubectl/. There is also a great quick-reference available on https://kubernetes.io/docs/reference/kubectl/quick-reference/ and https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
 
 ## Tools needed to follow the course
 
@@ -33,8 +33,11 @@ k8s_POD_kube-scheduler-minikube_kube-system_75ac196d3709dde303d8a81c035c2c28_1
 k8s_POD_etcd-minikube_kube-system_9aac5b5c8815def09a2ef9e37b89da55_1
 k8s_POD_kube-controller-manager-minikube_kube-system_7da72fc2e2cfb27aacf6cffd1c72da00_1
 ```
-some of them are very easy to spot, like **etcd**, **kube-apiserver**, **kube-scheduler**, **kube-controller-manager** for the Control Plane. **kube-proxy** would be present on a worker node
+some of them are very easy to spot, like **etcd**, **kube-apiserver**, **kube-scheduler**, **kube-controller-manager** for the Control Plane. **kube-proxy** would be present on a worker node:
 ![Kubernetes Cluster](https://kubernetes.io/images/docs/components-of-kubernetes.svg "Kubernetes Cluster")
+
+and a more detailed picture:
+![Kubernetes Cluster](https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg "Kubernetes Cluster")
 
 ## kubectl commands I used
 
@@ -43,4 +46,5 @@ some of them are very easy to spot, like **etcd**, **kube-apiserver**, **kube-sc
 - `kubectl get namespaces` - to list all available namespaces
 - `kubectl get pods` - to list pods in the default namespace
 - `kubectl get pods --namespace=<choosed>` - to list pods in the namespace called choosed. Ex.: `kubectl get pods --namespace=kube-system`
-- `kubectl run <pod-name> --image=<image-name>` - to create and run a new pod in the default namespace with a image available on Docker Hub. Ex.: `kubectl run nginx --image=nginx`
+- `kubectl run <pod-name> --image=<image-name>` - to create and run a new pod in the default namespace with an image available on Docker Hub by default. Ex.: `kubectl run nginx --image=nginx`
+- `kubectl describe pod <pod-name>` - to list a lot more information about the pod. Ex.: `kubectl describe pod nginx`
