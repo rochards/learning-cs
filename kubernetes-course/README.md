@@ -39,6 +39,15 @@ some of them are very easy to spot, like **etcd**, **kube-apiserver**, **kube-sc
 and a more detailed picture:
 ![Kubernetes Cluster](https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg "Kubernetes Cluster")
 
+## Some key considerations
+
+- It's better to create Pods using [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) rather than just `kubectl run <pod-name> --image=<image-name>`. Deployments provide more control over Pod lifecycle management and replica sets.
+- Creating a Deployment also creates a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. 
+- When creating Pods through Deployments, the Pod's name is like **nginx-deployment-6d6565499c-tng44**, where:
+    - **nginx-deployment** -> is the Deployment's name.
+    - **nginx-deployment-6d6565499c** -> is the ReplicaSet's name.
+    - **nginx-deployment-6d6565499c-tng44** -> is the Pod's name.
+
 ## kubectl commands I used
 
 - `kubectl cluster-info` - to get information about the cluster.
@@ -46,5 +55,10 @@ and a more detailed picture:
 - `kubectl get namespaces` - to list all available namespaces
 - `kubectl get pods` - to list pods in the default namespace
 - `kubectl get pods --namespace=<choosed>` - to list pods in the namespace called choosed. Ex.: `kubectl get pods --namespace=kube-system`
-- `kubectl run <pod-name> --image=<image-name>` - to create and run a new pod in the default namespace with an image available on Docker Hub by default. Ex.: `kubectl run nginx --image=nginx`
+- `kubectl run <pod-name> --image=<image-name>` - to create and run a new pod in the default namespace with an image available on Docker Hub (by default). Ex.: `kubectl run nginx --image=nginx`
 - `kubectl describe pod <pod-name>` - to list a lot more information about the pod. Ex.: `kubectl describe pod nginx`
+- `kubectl delete pod <pod-name>` - to delete the running pod. Ex.: `kubectl delete pod nginx`
+- `kubectl create deployment <deployment-name> --image=<image-name>` - to create a deployment in the default namespace from an image available on Docker Hub (by default). Ex.: `kubectl create deployment nginx-deployment --image=nginx`
+- `kubectl get deployment` - to list deployments
+- `kubectl describe deployment <deployment-name>` - to list a lot more information about the deployment: Ex.: `kubectl describe deployment nginx-deployment`
+- `kubectl get service` - to list services
