@@ -27,4 +27,4 @@ Here are some key points to remember about lists in Kotlin:
 - [1920. Build Array from Permutation](https://leetcode.com/problems/build-array-from-permutation/) - :slightly_smiling_face:
 - [268. Missing Number](https://leetcode.com/problems/missing-number/) - :slightly_smiling_face:
 - [1. Two sum](https://leetcode.com/problems/two-sum/description/) - :slightly_smiling_face:
-- [217. Contains Duplicate]https://leetcode.com/problems/contains-duplicate/ - :slightly_smiling_face:
+- [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - :slightly_smiling_face:
