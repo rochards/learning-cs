@@ -10,7 +10,7 @@ Refer to the glossary in this link https://kubernetes.io/docs/reference/glossary
 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) - to manage the kubernetes cluster
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) - it will be used to create a single node cluster on your machine. It will install all the necessary tools, including docker on the node.
-
+- [Docker Desktop](https://docs.docker.com/desktop/) - it will be necessary because some Docker components, like custom images, will be created outside minikube
 
 ## Connection to your minikube node
 
@@ -41,12 +41,17 @@ and a more detailed picture:
 
 ## Some key considerations
 
+### About Kubernetes in its objects in general
 - It's better to create Pods using [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) rather than just `kubectl run <pod-name> --image=<image-name>`. Deployments provide more control over Pod lifecycle management and replica sets.
 - Creating a Deployment also creates a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. 
 - When creating Pods through Deployments, the Pod's name is like **nginx-deployment-6d6565499c-tng44**, where:
     - **nginx-deployment** -> is the Deployment's name.
     - **nginx-deployment-6d6565499c** -> is the ReplicaSet's name.
     - **nginx-deployment-6d6565499c-tng44** -> is the Pod's name.
+- A [Service](https://kubernetes.io/docs/concepts/services-networking/service/) is the method for exposing a single or group of Pods over a network, with `ClusterIP` being the default type.
+
+### About web-hello folder
+- To deploy this app on a Kubernetes cluster, first you will have to build the docker image and then push it to DockerHub. Or just download the already built image [here](https://hub.docker.com/repository/docker/rochards/web-hello/general)
 
 ## kubectl commands I used
 
@@ -58,7 +63,9 @@ and a more detailed picture:
 - `kubectl run <pod-name> --image=<image-name>` - to create and run a new pod in the default namespace with an image available on Docker Hub (by default). Ex.: `kubectl run nginx --image=nginx`
 - `kubectl describe pod <pod-name>` - to list a lot more information about the pod. Ex.: `kubectl describe pod nginx`
 - `kubectl delete pod <pod-name>` - to delete the running pod. Ex.: `kubectl delete pod nginx`
+- `kubectl delete deployment <deployment-name>` - to delete the running deployment. Ex.: `kubectl delete deployment nginx-deployment`
 - `kubectl create deployment <deployment-name> --image=<image-name>` - to create a deployment in the default namespace from an image available on Docker Hub (by default). Ex.: `kubectl create deployment nginx-deployment --image=nginx`
 - `kubectl get deployment` - to list deployments
 - `kubectl describe deployment <deployment-name>` - to list a lot more information about the deployment: Ex.: `kubectl describe deployment nginx-deployment`
 - `kubectl get service` - to list services
+- `kubectl describe service <service-name>` - to list a lot more information about services. Ex.: `kubectl describe service nginx-service`
