@@ -69,3 +69,5 @@ and a more detailed picture:
 - `kubectl describe deployment <deployment-name>` - to list a lot more information about the deployment: Ex.: `kubectl describe deployment nginx-deployment`
 - `kubectl get service` - to list services
 - `kubectl describe service <service-name>` - to list a lot more information about services. Ex.: `kubectl describe service nginx-service`
+- `kubectl expose deployment <deployment-name> --port=<number>` - to create a Service for the specified deployment on the choosed port. Ex.: `kubectl expose deployment k8s-web-hello --port=3000` -> in this case `port` and `targetPort` are both set to 3000, and by the default the Service type will be `ClusterIP`
+- `kubectl scale deployment <deployment-name> --replicas=<quantity>` - to change the numbers of Pods of your deployment .Ex.: `kubectl scale deployment k8s-web-hello --replicas=4`
