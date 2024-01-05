@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-web-hello
+  template:
+    metadata:
+      labels:
+        app: k8s-web-hello # must be the same as matchLabels
+    spec:
+      containers:
+      - name: k8s-web-hello
+        image: rochards/web-hello
+        resources:
+          limits:
+            memory: "128Mi" # Mi == MiB
+            cpu: "500m" # m == milliCPU. 1000m == 1 vCPU
+        ports:
+        - containerPort: 3000
