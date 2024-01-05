@@ -51,7 +51,16 @@ and a more detailed picture:
 - A [Service](https://kubernetes.io/docs/concepts/services-networking/service/) is the method for exposing a single or group of Pods over a network, with `ClusterIP` being the default type.
 
 ### About web-hello folder
-- To deploy this app on a Kubernetes cluster, first you will have to build the docker image and then push it to DockerHub. Or just download the already built image [here](https://hub.docker.com/repository/docker/rochards/web-hello/general)
+- To deploy this app on a Kubernetes cluster, first you will have to build the docker image and then push it to DockerHub. Or just download the already built image `rochards/web-hello`.
+- To deploy, just apply both yaml file: `kubectl apply -f web-hello-deployment.yaml -f web-hello-service.yaml`
+- To access the service just type `minikube service k8s-web-hello`
+
+### About web-hello-to-nginx folder
+- To deploy this app on a Kubernetes cluster, first you will have to build the docker image and then push it to DockerHub. Or just download the already built image `rochards/web-hello-to-nginx`.
+- To deploy, just apply both yaml file: `kubectl apply -f k8s-web-hello-to-nginx.yaml -f nginx.yaml`
+- To access the service just type `minikube service k8s-web-hello-to-nginx`
+    - There is the `/` endpoint available;
+    - There is also the `/nginx` endpoint available;
 
 ## kubectl commands I used
 
