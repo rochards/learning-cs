@@ -1,4 +1,6 @@
-# The content listed here is a summary of the course [Algorithms and Data Structures Tutorial - Full Course for Beginners](https://www.youtube.com/watch?v=8hly31xKli0)
+# The content listed here is a summary of the course Algorithms and Data Structures Tutorial - Full Course for Beginners
+
+Link to course: https://www.youtube.com/watch?v=8hly31xKli0
 
 - [Implementation of binary search](src/main/kotlin/com/rochards/search)
 
@@ -28,3 +30,21 @@ Here are some key points to remember about lists in Kotlin:
 - [268. Missing Number](https://leetcode.com/problems/missing-number/) - :slightly_smiling_face:
 - [1. Two sum](https://leetcode.com/problems/two-sum/description/) - :slightly_smiling_face:
 - [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - :slightly_smiling_face:
+
+### Linked List
+
+A **Linked List** is a linear data structure that represents a sequence of nodes. Each node consists of two parts:
+- **data**: the actual value of the node.
+- **pointer**: a reference to the next node.
+```mermaid
+---
+title: Singly Linked List
+---
+flowchart LR;
+    5 --> 1; 1 --> 3; 3 --> 2; 2 --> 6;
+```
+the first element of the list is called **head** and last one **tail**.
+
+Some points to keep in mind about Linked Lists:
+- Unlike arrays, to access any elements has a time complexity of O(n). It means that to find the Kth element you must iterate over K elements;
+- Adding or removing elements from the beginning of the list is O(1);
