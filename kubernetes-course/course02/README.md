@@ -26,4 +26,5 @@ Here we have a picture showing a basic K8s cluster:
     - **kube-api-server**: also known as **API Server**, it exposes the K8s API. When you use `kubectl` tool to manage the cluster, it  interacts with this component.
     - **scheduler** or **kube-scheduler**: basically this component takes a request from the API Server that new Pods are available to creation. The schedule then evaluates and selects a node for them to run on, and makes a request to the kubelet on the selected node to create the Pod.
     - **Controller Manager** or **kube-controller-manager**: it's a component that runs **controller** processes. Controllers are control loops that watch the state of your cluster, then make or request changes where needed. Ex.: if a Pod "dies" it will request the scheduler to create a new Pod. It's a very complex component to understand and I highly recommend exploring the documentation for [controllers](https://kubernetes.io/docs/concepts/architecture/controller/).
-    - **etcd**: 
+    - **cloud-controller-manager**: it also runs **controller** processes but they are specific to a cloud provider, like AWS.
+    - **etcd**: a key-value store of the cluster state. Every information about K8s cluster, configuration, current state, desired state1 is stored in etcd.
