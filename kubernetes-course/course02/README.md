@@ -29,3 +29,26 @@ Here we have a picture showing a basic K8s cluster:
     - **Controller Manager** or **kube-controller-manager**: it's a component that runs **controller** processes. Controllers are control loops that watch the state of your cluster, then make or request changes where needed. Ex.: if a Pod "dies" it will request the scheduler to create a new Pod. It's a very complex component to understand and I highly recommend exploring the documentation for [controllers](https://kubernetes.io/docs/concepts/architecture/controller/).
     - **cloud-controller-manager**: it also runs **controller** processes but they are specific to a cloud provider, like AWS.
     - **etcd**: a key-value store of the cluster state. Every information about K8s cluster, configuration, current state, desired state1 is stored in etcd.
+
+## About the YAML files
+
+Each configuration file consists of three parts:
+- **metadata** - defined by you. Ex.:
+```yaml
+metadata:
+  name: nginx-deployment
+  labels: ...
+```
+- **specification** - defined by you. Ex.:
+```yaml
+spec:
+  replicas: 2
+  selector: ...
+```
+- **status** - this one is generated and added automatically by K8s. It holds the status of your deployment and uses it to reach the desired state getting information from etcd Ex.:
+```yaml
+status:
+  availableReplicas: 2
+  conditions: ...
+  replicas: ...
+```
