@@ -60,3 +60,21 @@ status:
   replicas: ...
 ```
 to check the information above just type `kubectl get deployment <deployment-name> -o yaml`.
+
+## About the mongo-deploy folder
+
+The intent of the YAML files in this folder is to accomplish the diagram below.
+
+```mermaid
+---
+title: Simple K8s cluster
+---
+flowchart LR;
+    id1[[Browser]] --> id2(Mongo Express External Service);
+    id2 --> id3{{Mongo Express Pod}};
+    id3 --> id4(Mongo DB Internal Service);
+    id4 --> id5{{MongoDB Pod}}
+```
+
+Type `chmod +x deploy.sh` to give the file execution permission, and then run it to deploy the applications. The same might be done for the `destroy.sh` file.
+
