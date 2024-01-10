@@ -63,7 +63,7 @@ to check the information above just type `kubectl get deployment <deployment-nam
 
 ## About the mongo-deploy folder
 
-The intent of the YAML files in this folder is to accomplish the diagram below.
+The intent of the YAML files in this folder is to accomplish the diagram below. You will access the MongoDB Express from your browser and the request will follow this flow:
 
 ```mermaid
 ---
