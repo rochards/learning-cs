@@ -30,6 +30,13 @@ Here we have a picture showing a basic K8s cluster:
     - **cloud-controller-manager**: it also runs **controller** processes but they are specific to a cloud provider, like AWS.
     - **etcd**: a key-value store of the cluster state. Every information about K8s cluster, configuration, current state, desired state1 is stored in etcd.
 
+## Layers of abstraction
+
+- Service;
+- ReplicaSet;
+- Pod;
+- Container
+
 ## About the YAML files
 
 Each configuration file consists of three parts:
@@ -52,3 +59,4 @@ status:
   conditions: ...
   replicas: ...
 ```
+to check the information above just type `kubectl get deployment <deployment-name> -o yaml`.

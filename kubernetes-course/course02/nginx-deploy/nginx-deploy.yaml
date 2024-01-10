@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template: # everything down bellow are configs applied to pods
+    metadata:
+      labels:
+        app: nginx # must be the same as defined in matchLabels
+    spec:
+      containers:
+      - name: nginx
+        image: nginx # default is to pull from Docker
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx # must be the same as matchLabels defined in Deployment
+  ports:
+  - port: 80 # the exposed port
+    targetPort: 8080 # the container port
