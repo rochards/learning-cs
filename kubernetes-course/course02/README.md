@@ -76,5 +76,5 @@ flowchart LR;
     id4 --> id5{{MongoDB Pod}}
 ```
 
-Type `chmod +x deploy.sh` to give the file execution permission, and then run it to deploy the applications. The same might be done for the `destroy.sh` file.
-
+Type `chmod +x deploy.sh` to give the file execution permission, and then run it to deploy the applications. The same might be done for the `destroy.sh` file.  
+After deploy, you can type `minikube service mongo-express-service` to open mongo express on your browser.

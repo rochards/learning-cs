@@ -36,3 +36,16 @@ spec:
             configMapKeyRef:
               name: mongodb-configmap # same name as defined in mongodb-configmap.yaml
               key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express-service
+spec:
+  selector:
+    app: mongo-express # the same as matchLabels above
+  type: LoadBalancer # to expose outside the cluster
+  ports:
+  - port: 8081
+    targetPort: 8081
+    nodePort: 30000 # exposed port must be between 30000 to 32767
