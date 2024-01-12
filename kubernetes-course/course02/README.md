@@ -1,7 +1,10 @@
 # Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]
 
 Course link: https://www.youtube.com/watch?v=X48VuDVv0do  
-Git with a list of CLI commands using `kubectl`: https://gitlab.com/nanuchi/youtube-tutorial-series/-/blob/master/basic-kubectl-commands/cli-commands.md
+Git with a list of CLI commands using `kubectl`: https://gitlab.com/nanuchi/youtube-tutorial-series/-/blob/master/basic-kubectl-commands/cli-commands.md  
+
+Quick reference with example to `kubectl` usage: https://kubernetes.io/docs/reference/kubectl/quick-reference/  
+All `kubectl` commands: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
 
 **Kubernetes**, also known as **K8s**, is an open source container orchestration tool.
 
