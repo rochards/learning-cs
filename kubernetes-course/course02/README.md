@@ -70,9 +70,9 @@ The intent of the YAML files in this folder is to accomplish the diagram below. 
 title: Simple K8s cluster
 ---
 flowchart LR;
-    id1[[Browser]] --> id2(Mongo Express External Service);
+    id1[[Browser]] --> id2(Mongo Express\nExternal Service);
     id2 --> id3{{Mongo Express Pod}};
-    id3 --> id4(Mongo DB Internal Service);
+    id3 --> id4(Mongo DB\nInternal Service);
     id4 --> id5{{MongoDB Pod}}
 ```
 
