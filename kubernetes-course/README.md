@@ -35,7 +35,27 @@ Here we have a picture showing a basic K8s cluster:
 
 ## Layers of abstraction
 
-- Service;
+- **Service**: a way to expose Pods over a network within the cluster and to external users. 
+  - the `mongo-deploy/mongoexpress-deploy.yaml` file provides an example of how to configure an external service (gives access outside the cluster).
+  - the `mongo-deploy/mongodb-deploy.yaml` file also provides an example of how to configure an internal service (only apps inside the cluster will be able to call the service).
+- **Ingress**: it's a K8s component that manages external (recommended way) access to the services in a cluster. So Ingres works and Service works together. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Ex.:
+```mermaid
+graph LR;
+  client([client])-. Ingress-managed <br> load balancer .->ingress[Ingress];
+  ingress[Ingress - \n pod controller and rules definition]-->|routing rule|service[Internal\nService];
+  subgraph cluster
+  ingress;
+  service-->pod1[Pod];
+  service-->pod2[Pod];
+  end
+  classDef plain fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
+  classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  class ingress,service,pod1,pod2 k8s;
+  class client plain;
+  class cluster cluster;
+```
+only creating a ingress resource has not effect. You must have an **ingress controller**, e.g, [ingress nginx](https://kubernetes.github.io/ingress-nginx/deploy/), [AWS Load Balancer Controller](https://github.com/kubernetes-sigs/aws-load-balancer-controller)
 - ReplicaSet;
 - Pod;
 - Container
@@ -86,3 +106,14 @@ flowchart LR;
 
 Type `chmod +x deploy.sh` to give the file execution permission, and then run it to deploy the applications. The same might be done for the `destroy.sh` file.  
 After deploy, you can type `minikube service mongo-express-service` to open mongo express on your browser.
+
+## Creating ingress to expose kubernetes-dashboard
+
+- to provide an ingress nginx controller in minikube type: `minikube addons enable ingress`.
+- you'll find a Pod of ingress nginx controller running if you type: `kubectl get pod -n ingress-nginx`.
+- you'll notice that there is available a **kubernetes-dashboard** namespace if you type: `kubectl get ns`.
+- we need the **kubernetes-dashboard** internal Service that answers on port 80. To check the service, type: `kubectl get service -n kubernetes-dashboard`.
+- now you just need to apply the `kubernetes-dashboard/dashboard-ingress.yaml` file by typing: `kubectl apply -f dashboard-ingress.yaml`.
+- to check the created ingress and the associated IP address, type: `kubectl get ingress -n kubernetes-dashboard`.
+- now you'll need to create a entry in `/etc/hosts` file mapping the IP address found above to the Host **dashboard.com**, e.g,: `192.168.49.2    dashboard.com`.
+- now open the **dashboard.com** on browser and you'll be able to see the K8s dashboard
