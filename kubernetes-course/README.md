@@ -39,6 +39,10 @@ Here we have a picture showing a basic K8s cluster:
 - ReplicaSet;
 - Pod;
 - Container
+- **namespaces**: namespaces provide a mechanism for isolating groups of resources within a single cluster. Some resources can't be isolated in a namespace, they live globally in the cluster, e.g, volumes and nodes. All resources that you create is on `default` namespace (you can create another one if you want to).
+    - a good example of use of namespace is to have a **blue** and **green** namespaces for **blue-green** deployment
+    - to list all resources delimited by a namespace: `kubectl api-resources --namespaced=true`
+    - to list all resources not delimited by a namespace: `kubectl api-resources --namespaced=false`
 
 ## About the YAML files
 
@@ -47,6 +51,7 @@ Each configuration file consists of three parts:
 ```yaml
 metadata:
   name: nginx-deployment
+  namespace: my-namespace # it you want to avoid default namespace
   labels: ...
 ```
 - **specification** - defined by you. Ex.:
