@@ -117,3 +117,7 @@ After deploy, you can type `minikube service mongo-express-service` to open mong
 - to check the created ingress and the associated IP address, type: `kubectl get ingress -n kubernetes-dashboard`.
 - now you'll need to create a entry in `/etc/hosts` file mapping the IP address found above to the Host **dashboard.com**, e.g,: `192.168.49.2    dashboard.com`.
 - now open the **dashboard.com** on browser and you'll be able to see the K8s dashboard
+
+## Helm charts
+
+According to the [official definition](https://helm.sh/), Helm is the package manager for Kubernetes. It's well-known convenient way to package YAML files and distribute them in repositories. For example, if you need prometheus deployed on your cluster, you don't need to make all configuration from scratch, you can use the [prometheus helm](https://artifacthub.io/packages/helm/prometheus-community/prometheus) for that.
