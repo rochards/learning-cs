@@ -38,7 +38,7 @@ Here we have a picture showing a basic K8s cluster:
 - **Service**: a way to expose Pods over a network within the cluster and to external users. 
   - the `mongo-deploy/mongoexpress-deploy.yaml` file provides an example of how to configure an external service (gives access outside the cluster).
   - the `mongo-deploy/mongodb-deploy.yaml` file also provides an example of how to configure an internal service (only apps inside the cluster will be able to call the service).
-- **Ingress**: it's a K8s component that manages external (recommended way) access to the services in a cluster. So Ingres works and Service works together. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Ex.:
+- **Ingress**: it's a K8s component that manages external (recommended way) access to the services in a cluster. So Ingress and Service work together. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Ex.:
 ```mermaid
 graph LR;
   client([client])-. Ingress-managed <br> load balancer .->ingress[Ingress];
