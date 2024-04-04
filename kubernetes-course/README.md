@@ -64,6 +64,16 @@ only creating a ingress resource has not effect. You must have an **ingress cont
     - to list all resources delimited by a namespace: `kubectl api-resources --namespaced=true`
     - to list all resources not delimited by a namespace: `kubectl api-resources --namespaced=false`
 
+### Volumes
+
+Volumes is a little bit complicated topic, so it deservers a separated section.
+
+K8s doesn't give you data persistence out of the box, meaning data stored in Pods disappears once they're terminated, that's why the need of Volumes.  
+These are the storage requirements:
+- storage must not depend on pod lifecycle.
+- storage must be available on all nodes.
+- storage needs to survive even if the cluster crashes
+
 ## About the YAML files
 
 Each configuration file consists of three parts:
