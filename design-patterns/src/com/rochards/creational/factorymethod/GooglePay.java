@@ -1,4 +1,4 @@
-package com.rochards.creational.factory;
+package com.rochards.creational.factorymethod;
 
 import java.math.BigDecimal;
 
