@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/sonarlint/
+.idea/uiDesigner.xml
 
 ### Eclipse ###
 .apt_generated
