@@ -14,4 +14,4 @@ They are:
 - [Come back to Builder later](https://refactoring.guru/design-patterns/builder)
 - [Prototype](https://refactoring.guru/design-patterns/prototype)
   - :bulb:: give a special attention to the **Applicability** section;
-  - this one is pretty straightforward and there is an implementation example following [this link]https://refactoring.guru/design-patterns/prototype/java/example
+  - this one is pretty straightforward and there is an implementation example following [this link](https://refactoring.guru/design-patterns/prototype/java/example)
