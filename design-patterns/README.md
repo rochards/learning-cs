@@ -11,3 +11,7 @@ They are:
 - [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
   - :bulb:: give a special attention to the **Applicability** section;
   - in the package `com.rochards.creational.abstractfactory` there is a slightly modified implementation example from [The Abstract Factory Pattern Explained and Implemented | Creational Design Patterns | Geekific](https://www.youtube.com/watch?v=QNpwWkdFvgQ) video.
+- [Come back to Builder later](https://refactoring.guru/design-patterns/builder)
+- [Prototype](https://refactoring.guru/design-patterns/prototype)
+  - :bulb:: give a special attention to the **Applicability** section;
+  - this one is pretty straightforward and there is an implementation example following [this link]https://refactoring.guru/design-patterns/prototype/java/example
