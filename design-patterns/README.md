@@ -29,7 +29,7 @@ flexible and efficient.
 They are:
 - [Adapter](https://refactoring.guru/design-patterns/adapter):
   - in Java `Arrays.asList(array)` method is an adapter implementation, because you pass an **Array** as the method argument and receives a **List**
-  - in the package `com.rochards.creational.structural.adapter` there is an example that I created to implement an Adapter pattern that implements the following diagram. Additional information is given in `RunExamples.java` class:
+  - in the package `com.rochards.structural.adapter` there is an example that I created to implement an Adapter pattern that implements the following diagram. Additional information is given in `RunExamples.java` class:
 
 ```mermaid
 ---

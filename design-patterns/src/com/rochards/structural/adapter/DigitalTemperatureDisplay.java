@@ -1,4 +1,4 @@
-package com.rochards.creational.structural.adapter;
+package com.rochards.structural.adapter;
 
 public class DigitalTemperatureDisplay {
 
