@@ -6,6 +6,6 @@ public class TemperatureSensor {
      */
     public static double acquireTemperature() {
         // in a real case scenario the temperature would be coming from some hardware
-        return Math.random() * 100 - 0; // to simulate a range from 0 °F to 100 °F
+        return Math.random() * 110 - 10; // to simulate a range from -10 °F to 100 °F
     }
 }
