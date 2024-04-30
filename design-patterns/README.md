@@ -57,7 +57,7 @@ classDiagram
         + printMessage(temperature)
       }
     }
-    TemperatureDisplay <-- RunExamples: Association
+    TemperatureDisplay <-- RunExamples
     TemperatureDisplay <|-- DigitalTemperatureDisplayAdapter : Inheritance
     DigitalTemperatureDisplay <-- DigitalTemperatureDisplayAdapter : Association
 ```
