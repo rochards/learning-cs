@@ -27,6 +27,8 @@ Look at the format of a program in Linux systems:
 </div>
 ELF stands for Executable and Linkable Format.
 
+:bulb: there is a simple code written in C in `code-section3` folder with the assembly `.s` file of this program compiled for a **x86_64** machine.
+
 **Process**:
 - Lives in memory;
 - Is the program in execution;
@@ -40,8 +42,6 @@ Take a look on how a process lives in memory:
 </div>
 the arrows above mean that the Stack "grows down" and the Heap "grows up".
 
-:bulb: there is a simple code written in C in `code-section3` folder with the assembly `.s` file of this program compiled for a **x86_64** machine.
-
 
 ## Terminal commands for linux used through the course
 
@@ -52,6 +52,4 @@ To know more about any commands below, just use the `man <command-name>` in term
 - `gdb <file-name>`: to debug a compiled program. And after you executed it, you may type:
   - `start`: to begin the debugging;
   - `n`: to execute the next code instruction;
-  - `info registers`: to show the registers and current information holded by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer);
-  - `
-  
+  - `info registers`: to show the registers and current information holded by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
