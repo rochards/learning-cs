@@ -22,13 +22,13 @@ Program:
 
 Look at the format of a program in Linux systems:  
 <p style="text-align: center;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Elf-layout--en.svg/800px-Elf-layout--en.svg.png" alt="ELF (Executable and Linkable Format) program format">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Elf-layout--en.svg/800px-Elf-layout--en.svg.png" style="width: 60%; height: auto; alt="ELF (Executable and Linkable Format) program format">
 </p>
 
 Process:
 * Lives on memory;
 
-Look at the format of a process in an operating system:  
+Look at the format of a process in memory:  
 <p style="text-align: center;">
   <img src="images/process_anatomy.drawio.svg" alt="Anatomy of a process">
 </p>
