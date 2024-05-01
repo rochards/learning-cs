@@ -21,13 +21,16 @@ Program:
 * Produces executable file program, the so-called process;
 
 Look at the format of a program in Linux systems:  
-![ELF (Executable and Linkable Format) program format](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:Elf-layout--en.svg)
+<p style="text-align: center;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Elf-layout--en.svg/800px-Elf-layout--en.svg.png" alt="ELF (Executable and Linkable Format) program format">
+</p>
 
 Process:
 * Lives on memory;
 
+Look at the format of a process in an operating system:  
 <p style="text-align: center;">
-  <img src="/images/process_anatomy.drawio.svg" alt="Anatomy of a process">
+  <img src="images/process_anatomy.drawio.svg" alt="Anatomy of a process">
 </p>
 
 
