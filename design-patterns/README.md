@@ -65,7 +65,90 @@ the **Client Code** above acquires some data from a sensor in Fahrenheit but can
 (that we're assuming is coming from some library) service immediately because the `printMessage(temperature)` method from 
 that class only works with Celsius.
 
-- Bridge;
+- [Bridge](https://refactoring.guru/design-patterns/bridge);
+  - let's imagine that we have a `Payment` interface the current implementations are: `GooglePay`, `PayPal` and `ApplePay`. The diagram looks like this:
+```mermaid
+---
+title: Payment Methods
+---
+classDiagram
+    class Payment {
+        <<interface>>
+        +pay()
+    }
+    
+    class GooglePay {
+    }
+    
+    class PayPal {
+    }
+    
+    class ApplePay {
+    }
+    
+    Payment <|.. GooglePay: implements
+    Payment <|.. PayPal: implements
+    Payment <|.. ApplePay: implements
+```
+now we also would like to provide a way to pay with credit card, debit card or pix (payment method very common in Brazil). Now we end up with `GooglePayCreditCard`, `GooglePayDebitCard`, `GooglePayPix`, `PayPalCreditCard` ... and so on. You got the idea. This wouldn't be very practical.  
+We may use the Bridge pattern to solve this problem using *abstraction* and *implementation* idea from this pattern.
+```mermaid
+---
+title: Payment Methods using Bridge Pattern
+---
+classDiagram
+    
+    namespace implementation {
+        class PaymentMode {
+            <<interface>>
+            executeTransaction()
+        }
+    }
+
+    namespace abstraction {
+      class Payment {
+        <<abstract>>
+        #paymentMode: PaymentMode
+        +pay()*
+      }
+    }
+
+    class GooglePay {
+  
+    }
+    class PayPal {
+  
+    }
+    class ApplePay {
+  
+    }
+    
+    
+    class CreditCard {
+        
+    }
+    class DebitCard {
+        
+    }
+    class Pix {
+        
+    }
+
+    PaymentMode <|.. CreditCard: implements
+    PaymentMode <|.. DebitCard: implements
+    PaymentMode <|.. Pix: implements
+    
+    
+    Payment <|-- GooglePay: extends
+    Payment <|-- ApplePay: extends
+    Payment <|-- PayPal: extends
+  
+    Payment o-- PaymentMode: uses
+  
+  
+```
+there is a reduced implementation of the diagram above in the package `com.rochards.structural.bridge`.
+
 - Composite;
 - Decorator;
 - Facade;
