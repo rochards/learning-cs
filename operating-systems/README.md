@@ -53,3 +53,16 @@ To know more about any commands below, just use the `man <command-name>` in term
   - `start`: to begin the debugging;
   - `n`: to execute the next code instruction;
   - `info registers`: to show the registers and current information holded by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
+
+## Curiosity
+Cost time to from the CPU perspective to read data from:
+| Source    | :hourglass: |
+| --------- | ----------- |
+| registers | 1 ns        |
+| L1 cache  | 2 ns        |
+| L2 cache  | 7 ns        |
+| L3 cache  | 15 ns       |
+| RAM       | 100 ns      |
+| SSD       | 150 ns      |
+| HDD       | 10 ms       |
+
