@@ -55,10 +55,10 @@ To know more about any commands below, just use the `man <command-name>` in term
   - `info registers`: to show the registers and current information holded by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
 
 ## Curiosity
-Cost time to from the CPU perspective to read data from:
+Cost time from the CPU perspective to read data from:
 | Source    | :hourglass: |
 | --------- | ----------- |
-| registers | 1 ns        |
+| Registers | 1 ns        |
 | L1 cache  | 2 ns        |
 | L2 cache  | 7 ns        |
 | L3 cache  | 15 ns       |
