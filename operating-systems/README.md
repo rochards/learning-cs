@@ -13,7 +13,9 @@ They are just an introduction and an overview of what the course is about and wh
 
 ## Section 3: The anatomy of a process
 
-Process vs Program: A process is a program in motion/execution.
+### Process vs Program
+
+A process is a program in motion/execution.
 
 **Program**:
 - Lives on disk;
@@ -42,7 +44,8 @@ Take a look on how a process lives in memory:
 </div>
 the arrows above mean that the Stack "grows down" and the Heap "grows up".
 
-**Simple Process Execution**
+
+### Simple Process Execution
 
 Initial considerations:
 - In the image below we're considering that each instruction is at most 4 bytes long (32 bits architecture);
