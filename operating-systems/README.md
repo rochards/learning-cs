@@ -42,6 +42,19 @@ Take a look on how a process lives in memory:
 </div>
 the arrows above mean that the Stack "grows down" and the Heap "grows up".
 
+**Simple Process Execution**
+
+Initial considerations:
+- In the image below we're considering that each instruction is at most 4 bytes long (32 bits architecture);
+- `mov`, `add`, `str` are instructions;
+- `r*`, `pc` (program counter), `ir` (instruction register) are CPU registers;
+- the ELF header in the program tells the OS where to start the program;
+- for simplicity, we're not considering the L* caches;
+
+<div align="center">
+  <img src="images/simplified-process-execution.gif" alt="Anatomy of a process">
+</div>
+the the execution of the remaining instructions happen the same way.
 
 ## Terminal commands for linux used through the course
 
@@ -52,10 +65,10 @@ To know more about any commands below, just use the `man <command-name>` in term
 - `gdb <file-name>`: to debug a compiled program. And after you executed it, you may type:
   - `start`: to begin the debugging;
   - `n`: to execute the next code instruction;
-  - `info registers`: to show the registers and current information holded by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
+  - `info registers`: to show the registers and current information held by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
 
 ## Curiosity
-Cost time from the CPU perspective to read data from:
+Average cost time from the CPU perspective to read data from:
 | Source    | :hourglass: |
 | --------- | ----------- |
 | Registers | 1 ns        |
