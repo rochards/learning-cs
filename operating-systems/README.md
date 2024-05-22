@@ -59,6 +59,14 @@ Initial considerations:
 </div>
 the the execution of the remaining instructions happen the same way.
 
+### The Stack
+
+- The stack pointer (**sp**) is a register in the CPU the always points to the end of the stack.
+
+<div align="center">
+  <img src="images/the-stack-stack.svg" alt="Anatomy of a process">
+</div>
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
