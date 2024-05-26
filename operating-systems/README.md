@@ -61,11 +61,18 @@ the the execution of the remaining instructions happen the same way.
 
 ### The Stack
 
-- The stack pointer (**sp**) is a register in the CPU the always points to the end of the stack.
-
+- The **stack pointer (sp)** is a register in the CPU the always points to the end of the stack.
 <div align="center">
   <img src="images/the-stack-stack.svg" alt="Anatomy of a process">
 </div>
+
+- The **base pointer (bp)** is also a register in the CPU to mark the start of the function; 
+- *bp* always points to the last function in the stack. In the image above, *bp* would be pointing to the beginning of `function 3`;
+- Moving up and down we must allocate and deallocate memory
+<div align="center">
+  <img src="images/the-stack-allocation.svg" alt="Anatomy of a process">
+</div>
+to deallocate it's just made the opposite of above. Sometimes the OS can make optimizations to save time and won't deallocate just one variable if the function is still in use.
 
 ## Terminal commands for linux used through the course
 
