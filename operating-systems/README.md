@@ -70,9 +70,23 @@ the the execution of the remaining instructions happen the same way.
 - *bp* always points to the last function in the stack. In the image above, *bp* would be pointing to the beginning of `function 3`;
 - Moving up and down we must allocate and deallocate memory
 <div align="center">
-  <img src="images/the-stack-allocation.svg" alt="Anatomy of a process">
+  <img src="images/the-stack-allocation.svg" alt="The stack allocation">
 </div>
 to deallocate it's just made the opposite of above. Sometimes the OS can make optimizations to save time and won't deallocate just one variable if the function is still in use.
+
+Example on how memory is allocated in stack to call a new function:
+<div align="center">
+  <img src="images/the-stack.gif" alt="The stack allocation for new functions">
+</div>
+
+Questions:
+- what is the **link register (lr)**??: it stores the instruction where we're link back to the original function??
+- If the return address is stored in the link register, why do we need to store it in the memory as part of the called function?
+
+**Summary**:
+- the stack grows from high to low;
+- it's used for function calls;
+- stack variables die quickly;
 
 ## Terminal commands for linux used through the course
 
