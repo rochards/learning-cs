@@ -78,15 +78,13 @@ Example on how memory is allocated in stack to call a new function:
 <div align="center">
   <img src="images/the-stack.gif" alt="The stack allocation for new functions">
 </div>
-
-Questions:
-- what is the **link register (lr)**??: it stores the instruction where we're link back to the original function??
-- If the return address is stored in the link register, why do we need to store it in the memory as part of the called function?
+the **link register (lr)** also holds the main's return address for fast execution when `func1` returns. If `func1` calls another function, then *lr* is updated
 
 **Summary**:
 - the stack grows from high to low;
 - it's used for function calls;
 - stack variables die quickly;
+- the following registers where covered: *stack pointer (sp)*, *base pointer (bp)* and *link register (lr)*
 
 ## Terminal commands for linux used through the course
 
