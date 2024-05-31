@@ -78,6 +78,7 @@ Example on how memory is allocated in stack to call a new function:
 <div align="center">
   <img src="images/the-stack.gif" alt="The stack allocation for new functions">
 </div>
+
 the **link register (lr)** also holds the main's return address for fast execution when `func1` returns. If `func1` calls another function, then *lr* is updated
 
 **Summary**:
