@@ -89,7 +89,8 @@ the **link register (lr)** also holds the main's return address for fast executi
 
 **Curiosity section :nerd_face:**
 - when a function returns, that portion of memory is not cleaned by the compiler. It all remains there and will be overwritten when another function is called;
-- When a program compiles, the compiler goes through all the code, looks at all the functions, and 'decides' how much memory is required. It then tells the process to allocate this memory when it runs. Many optimizations are made, such as whether to allocate a variable in memory or keep it in registers (if there are enough)..
+- when a program compiles, the compiler goes through all the code, looks at all the functions, and 'decides' how much memory is required. It then tells the process to allocate this memory when it runs. Many optimizations are made, such as whether to allocate a variable in memory or keep it in registers (if there are enough);
+- the kernel sets a default stack limit for every program. Of course, you can set compiler options to override this default when compiling your code. If the program exceeds this stack limit, it will encounter the infamous **stack overflow** error.
 
 ## Terminal commands for linux used through the course
 
