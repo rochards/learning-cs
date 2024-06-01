@@ -150,7 +150,7 @@ int main() {
   free(ptr); // free the memory
 }
 ```
-I'm using a x86_64 architecture machine, so if I compile the code above to assembly, you'd be seeing system calls like `call	malloc@PLT` to allocate memory and `call	free@PLT` to free memory. Take a look at the `/code-section3/allocation-example.s`file
+I'm using a x86_64 architecture machine, so if I compile the code above to assembly, you'd be seeing system calls like `call malloc@PLT` to allocate memory and `call free@PLT` to free memory. Take a look at the `/code-section3/allocation-example.s`file
 
 **Memory leaks**
 - it happens when you, as a programmer, forget to free memory that you allocated. The function returns without calling the `free` syscall. If you don't explicitly tell the kernel that you don't need that portion of memory anymore, it remains allocated to your process.
