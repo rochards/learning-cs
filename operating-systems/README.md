@@ -92,6 +92,36 @@ the **link register (lr)** also holds the main's return address for fast executi
 - when a program compiles, the compiler goes through all the code, looks at all the functions, and 'decides' how much memory is required. It then tells the process to allocate this memory when it runs. Many optimizations are made, such as whether to allocate a variable in memory or keep it in registers (if there are enough);
 - the kernel sets a default stack limit for every program. Of course, you can set compiler options to override this default when compiling your code. If the program exceeds this stack limit, it will encounter the infamous **stack overflow** error.
 
+### The Data Section
+
+- fixed size portion in memory;
+- portion of the memory dedicated to:
+  - fixed size variables;
+  - global variables;
+  - static variables;
+- all functions can access the variables from this region.
+
+Take this code as an example:
+```c
+int a = 10;
+int b = 20;
+
+int main() {
+  int sum = a + b;
+  return 0;
+}
+```
+the assembly code of that sum line would be something like this (read from bottom to up):
+```arm
+str r2, r1, r0
+ldr r1 [#DATA, -4] ; load B
+ldr r0 [#DATA, 0]  ; load A
+```
+think of `#DATA` as a pointer to the Data section.
+
+**Curiosity section :nerd_face:**
+- there are some languages, like Erlang, that allow you to change the text/code and data sections at runtime.
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
