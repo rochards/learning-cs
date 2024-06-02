@@ -178,6 +178,19 @@ int main() {
 - Due to the kernel mode switch (syscall involved) for allocation operations, it costs more to allocate memory in the heap than in the stack;
 - Allocation in the heap is random, which leads to more frequent cache misses in the `L*` caches. This results in more trips to memory to fetch new data, which is also more costly.
 
+**Escape analysis**
+- If an object does not escape its scope (objects that are created and used within a single function or thread and do not "escape" that context), the compiler can allocate it **on the stack instead of the heap**, reducing the overhead of heap allocation and garbage collection. This make a lot of sense in languages like Java and Go.
+
+**Program break**
+- Is a pointer that represents the current end of the process's heap;
+- When the process needs more heap, the program break is moved to a higher address to increase the heap size.
+
+**Summary**
+So, the heap:
+- Stores large data;
+- Remain until explicitly removed;
+- All functions can access.
+
 **Curiosity section :nerd_face:**
 - Using c language we can:
   - Allocate memory in heap using the `malloc` function;
