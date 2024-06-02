@@ -51,8 +51,8 @@ Initial considerations:
 - In the image below we're considering that each instruction is at most 4 bytes long (32 bits architecture);
 - `mov`, `add`, `str` are instructions;
 - `r*`, `pc` (program counter), `ir` (instruction register) are CPU registers;
-- the ELF header in the program tells the OS where to start the program;
-- for simplicity, we're not considering the L* caches;
+- The ELF header in the program tells the OS where to start the program;
+- For simplicity, we're not considering the L* caches;
 
 <div align="center">
   <img src="images/simplified-process-execution.gif" alt="Anatomy of a process">
@@ -82,25 +82,25 @@ Example on how memory is allocated in stack to call a new function:
 the **link register (lr)** also holds the main's return address for fast execution when `func1` returns. If `func1` calls another function, then *lr* is updated
 
 **Summary**:
-- the stack grows from high to low;
-- it's used for function calls;
-- stack variables die quickly;
-- the following registers where covered: *stack pointer (sp)*, *base pointer (bp)* and *link register (lr)*
+- The stack grows from high to low;
+- It's used for function calls;
+- Stack variables die quickly;
+- The following registers where covered: *stack pointer (sp)*, *base pointer (bp)* and *link register (lr)*
 
 **Curiosity section :nerd_face:**
-- when a function returns, that portion of memory is not cleaned by the compiler. It all remains there and will be overwritten when another function is called;
-- when a program compiles, the compiler goes through all the code, looks at all the functions, and 'decides' how much memory is required. It then tells the process to allocate this memory when it runs. Many optimizations are made, such as whether to allocate a variable in memory or keep it in registers (if there are enough);
-- the kernel sets a default stack limit for every program. Of course, you can set compiler options to override this default when compiling your code. If the program exceeds this stack limit, it will encounter the infamous **stack overflow** error.
+- When a function returns, that portion of memory is not cleaned by the compiler. It all remains there and will be overwritten when another function is called;
+- When a program compiles, the compiler goes through all the code, looks at all the functions, and 'decides' how much memory is required. It then tells the process to allocate this memory when it runs. Many optimizations are made, such as whether to allocate a variable in memory or keep it in registers (if there are enough);
+- The kernel sets a default stack limit for every program. Of course, you can set compiler options to override this default when compiling your code. If the program exceeds this stack limit, it will encounter the infamous **stack overflow** error.
 
 
 ### The Data Section
 
-- fixed size portion in memory;
-- portion of the memory dedicated to:
-  - fixed size variables;
-  - global variables;
-  - static variables;
-- all functions can access the variables from this region.
+- Fixed size portion in memory;
+- Portion of the memory dedicated to:
+  - Fixed size variables;
+  - Global variables;
+  - Static variables;
+- All functions can access the variables from this region.
 
 Take this code as an example:
 ```c
@@ -121,17 +121,17 @@ ldr r0 [#DATA, 0]  ; load A
 think of `#DATA` as a pointer to the Data section.
 
 **Curiosity section :nerd_face:**
-- there are some languages, like Erlang, that allow you to change the text/code and data sections at runtime.
+- There are some languages, like Erlang, that allow you to change the text/code and data sections at runtime.
 
 
 ### The Heap
 
-- characteristics:
-  - large dynamic place for memory allocations;
-  - all dynamic allocation happen here;
-  - memory must be explicitly freed by your program;
-  - it grows from low to high addresses (it grows up);
-- all functions can access data from the heap using **pointers**.
+- Characteristics:
+  - Large dynamic place for memory allocations;
+  - All dynamic allocation happen here;
+  - Memory must be explicitly freed by your program;
+  - It grows from low to high addresses (it grows up);
+- All functions can access data from the heap using **pointers**.
 <div align="center">
   <img src="images/the-heap-heap.svg" alt="The heap">
 </div>
@@ -153,10 +153,10 @@ int main() {
 I'm using a x86_64 architecture machine, so if I compile the code above to assembly, you'd be seeing system calls like `call malloc@PLT` to allocate memory and `call free@PLT` to free memory. Take a look at the `/code-section3/allocation-example.s`file
 
 **Memory leaks**
-- it happens when you, as a programmer, forget to free memory that you allocated. The function returns without calling the `free` syscall. If you don't explicitly tell the kernel that you don't need that portion of memory anymore, it remains allocated to your process.
+- It happens when you, as a programmer, forget to free memory that you allocated. The function returns without calling the `free` syscall. If you don't explicitly tell the kernel that you don't need that portion of memory anymore, it remains allocated to your process.
 
 **Dangling pointers**
--  a dangling pointer is a pointer that references a memory location that is no longer valid. Example:
+-  A dangling pointer is a pointer that references a memory location that is no longer valid. Example:
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -175,16 +175,16 @@ int main() {
 ```
 
 **Performance**
-- due to the kernel mode switch (syscall involved) for allocation operations, it costs more to allocate memory in the heap than in the stack;
-- allocation in the heap is random, which leads to more frequent cache misses in the `L*` caches. This results in more trips to memory to fetch new data, which is also more costly.
+- Due to the kernel mode switch (syscall involved) for allocation operations, it costs more to allocate memory in the heap than in the stack;
+- Allocation in the heap is random, which leads to more frequent cache misses in the `L*` caches. This results in more trips to memory to fetch new data, which is also more costly.
 
 **Curiosity section :nerd_face:**
-- using c language we can:
-  - allocate memory in heap using the `malloc` function;
-  - deallocate memory using the `free` function;
-  - those functions make system calls, so the OS can do the memory allocation for your processes;
-- garbage collection in languages like Go and Java try to solve the problem of allocating and deallocating memory for the programmer;
-- it's a good prevention strategy to set the pointer to `NULL` after freeing it to ensure it doesn't point to a freed memory location. Ex.: `free(ptr); ptr = NULL;`.
+- Using c language we can:
+  - Allocate memory in heap using the `malloc` function;
+  - Deallocate memory using the `free` function;
+  - Those functions make system calls, so the OS can do the memory allocation for your processes;
+- Garbage collection in languages like Go and Java try to solve the problem of allocating and deallocating memory for the programmer;
+- It's a good prevention strategy to set the pointer to `NULL` after freeing it to ensure it doesn't point to a freed memory location. Ex.: `free(ptr); ptr = NULL;`.
 
 ## Terminal commands for linux used through the course
 
