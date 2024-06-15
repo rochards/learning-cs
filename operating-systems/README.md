@@ -227,17 +227,32 @@ Take a look at a simplified example of reading from a **DDR4** SDRAM:
   <img src="images/anatomy-of-memory-ddr4.svg" alt="DD4 memory">
 </div>
 
-- each io pin gives 1 byte (8 bits) of information -> *64 pins x 1 byte = 64 bytes*;
-- because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
+- Each io pin gives 1 byte (8 bits) of information -> *64 pins x 1 byte = 64 bytes*;
+- Because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
 
 Take a look at a simplified example of reading from a **DDR5** SDRAM:
 <div align="center">
   <img src="images/anatomy-of-memory-ddr5.svg" alt="DD5 memory">
 </div>
 
-- each io pin gives 2 bytes (16 bits) of information -> *32 pins x 2 bytes = 64 bytes*;
-- because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
+- Each io pin gives 2 bytes (16 bits) of information -> *32 pins x 2 bytes = 64 bytes*;
+- Because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
 - :bulb: because of this idea of channels, as one CPU core is reading from channel A, the other core can read from channel B.
+
+### Reading and Writing from and to Memory
+
+Take a look at simplified example of reading from memory:
+<div align="center">
+  <img src="images/reading-from-memory.gif" alt="Reading from memory">
+</div>
+
+- Note that after getting the 64 bytes, all the next instructions are already in the L caches, so there is no need to fetch from RAM again for a while;
+- Also, note that if any instruction is a call to a function, it will be necessary to read from memory again, causing us to lose what we already had in the L cache. Because of that, calling too many functions in the code can lead to a decrease in code execution performance.
+
+Take a look at simplified example of writing to memory:
+<div align="center">
+  <img src="images/write-to-memory.gif" alt="Write to memory">
+</div>
 
 ## Terminal commands for linux used through the course
 
