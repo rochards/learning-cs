@@ -5,6 +5,7 @@ My notes from [Fundamentals of Operating Systems](https://www.udemy.com/course/f
 ## Table of content
 - [Introduction](#section-1-and-section-2)
 - [The anatomy of a process](#section-3-the-anatomy-of-a-process)
+- [Memory Management](#section-4-memory-management)
 - [Terminal commands for linux used through the course](#terminal-commands-for-linux-used-through-the-course)
 
 ## Section 1 and Section 2
@@ -198,6 +199,45 @@ So, the heap:
   - Those functions make system calls, so the OS can do the memory allocation for your processes;
 - Garbage collection in languages like Go and Java try to solve the problem of allocating and deallocating memory for the programmer;
 - It's a good prevention strategy to set the pointer to `NULL` after freeing it to ensure it doesn't point to a freed memory location. Ex.: `free(ptr); ptr = NULL;`.
+
+## Section 4: Memory Management
+
+### The Anatomy of Memory
+
+**Characteristics of memory**:
+- Stores data;
+- Volatile:
+  - RAM - Random Access Memory
+- Non-Volatile:
+  - ROM - Read Only Memory
+
+**Types of RAM**:
+- SRAM - Static RAM:
+  - 1 bit -> 1 flip flop circuit (5 or 6 transistors);
+  - Access is always fast;
+  - It's also used as caches in CPU and SSDs.
+- DRAM - Dynamic RAM:
+  - 1 bit -> 1 capacitor + 1 transistor;
+  - Slower than SRAM;
+  - SDRAM (Synchronous DRAM): the clock of CPU and RAM are synchronized;
+  - DDR (Double Data Rate) :question: do some research for better understanding.
+
+Take a look at a simplified example of reading from a **DDR4** SDRAM:
+<div align="center">
+  <img src="images/anatomy-of-memory-ddr4.svg" alt="DD4 memory">
+</div>
+
+- each io pin gives 1 byte (8 bits) of information -> *64 pins x 1 byte = 64 bytes*;
+- because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
+
+Take a look at a simplified example of reading from a **DDR5** SDRAM:
+<div align="center">
+  <img src="images/anatomy-of-memory-ddr5.svg" alt="DD5 memory">
+</div>
+
+- each io pin gives 2 bytes (16 bits) of information -> *32 pins x 2 bytes = 64 bytes*;
+- because of the costing of reading, the CPU gets a total of 64 bytes (the CPU's cache line size) in response;
+- :bulb: because of this idea of channels, as one CPU core is reading from channel A, the other core can read from channel B.
 
 ## Terminal commands for linux used through the course
 
