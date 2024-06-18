@@ -44,16 +44,14 @@ func printTransactionFormattedDetails(transaction Transaction) {
 	)
 }
 
-func AddTransaction(date time.Time, description string, amount float64, transactionType TransactionType) {
+func AddTransaction(transaction Transaction) {
 
-	if transactionType == Expense {
-		amount = -1.0 * amount
+	if transaction.Type == Expense && transaction.Amount > 0 {
+		transaction.Amount = -1.0 * transaction.Amount
 	}
-
-	transaction := Transaction{Date: date, Description: description, Amount: amount, Type: transactionType}
 	transactions = append(transactions, transaction)
 
-	fmt.Printf("\nAdded new transaction. With details below:\n")
+	fmt.Printf("\nAdded new transaction with details below:\n")
 	printTransactionFormattedDetails(transaction)
 	fmt.Println()
 }
@@ -70,4 +68,34 @@ func ListTransactions() {
 		printTransactionFormattedDetails(transaction)
 		fmt.Println()
 	}
+}
+
+func UpdateTransaction(index int, transaction Transaction) {
+	index = index - 1
+	if index < 0 || index > len(transactions)-1 {
+		fmt.Println("Invalid index. Try again")
+		return
+	}
+
+	if transaction.Type == Expense && transaction.Amount > 0 {
+		transaction.Amount = -1.0 * transaction.Amount
+	}
+
+	transactions[index] = transaction
+	fmt.Printf("\nUpdated transaction:\n")
+	printTransactionFormattedDetails(transactions[index])
+	fmt.Println()
+}
+
+func ShowTransaction(index int) {
+
+	index = index - 1
+	if index < 0 || index > len(transactions)-1 {
+		fmt.Println("Invalid index. Try again!")
+		return
+	}
+
+	fmt.Printf("\nTransaction details:\n")
+	printTransactionFormattedDetails(transactions[index])
+	fmt.Println()
 }
