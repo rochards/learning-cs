@@ -31,10 +31,17 @@ type Transaction struct {
 var transactions []Transaction
 
 func printTransactionFormattedDetails(transaction Transaction) {
-	fmt.Println("Date: ", transaction.Date.Format("2006-01-02"))
-	fmt.Println("Description: ", transaction.Description)
-	fmt.Printf("Amount: $ %.2f\n", transaction.Amount)
-	fmt.Println("Type: ", transaction.Type.ToString())
+	fmt.Printf(`
+	Date: %s;
+	Description: %s;
+	Amount: $ %.2f;
+	Type: %s.
+	`,
+		transaction.Date.Format("2006-01-02"),
+		transaction.Description,
+		transaction.Amount,
+		transaction.Type.ToString(),
+	)
 }
 
 func AddTransaction(date time.Time, description string, amount float64, transactionType TransactionType) {
@@ -46,8 +53,9 @@ func AddTransaction(date time.Time, description string, amount float64, transact
 	transaction := Transaction{Date: date, Description: description, Amount: amount, Type: transactionType}
 	transactions = append(transactions, transaction)
 
-	fmt.Println("Added new transaction. With details below")
+	fmt.Printf("\nAdded new transaction. With details below:\n")
 	printTransactionFormattedDetails(transaction)
+	fmt.Println()
 }
 
 func ListTransactions() {
