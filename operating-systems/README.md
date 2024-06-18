@@ -254,6 +254,47 @@ Take a look at simplified example of writing to memory:
   <img src="images/write-to-memory.gif" alt="Write to memory">
 </div>
 
+### Virtual Memory
+
+**Limitations of Physical Memory**:
+
+**Fragmentation**
+
+It happens when free memory are scattered in small blocks across the RAM, making difficult to allocate contiguous blocks of memory;
+<div align="center">
+  <img src="images/anatomy-of-memory-fragmentation.gif" alt="Memory fragmentation">
+</div>
+
+- External fragmentation: the image above provides a great example of external fragmentation. There is free space available between blocks, but yet the memory can't fit a new process;
+- Internal fragmentation: the blocks allocated are more than needed, so there are potentially free spaces available (because is not being used by the process) inside the block. Example: if a process requests 18 bytes and the allocator rounds up to the nearest 32 bytes, 14 bytes are wasted within that block.
+
+**Virtual Memory and Fragmentation**
+
+- Let's use fixed block size and call it **page**;
+- A **page size** is often 4 kB;
+- Each process has virtual address space;
+<div align="center">
+  <img src="images/anatomy-of-memory-vm.png" alt="Virtual memory mapping">
+</div>
+
+- Note that when looking to the VM (Virtual Memory) all the processes are alike;
+- `A.P2` and `C.P1` shows internal fragmentation, where that portion of process doesn't need the whole page, but it is allocated anyway. But we solved the external fragmentation problem.
+- We map logical page (virtual/logical addresses) to physical page (physical addresses) and this information is stored in the **process page table**;
+  - Page table is stored in memory;
+  - Each process has it own page table;
+
+
+- Shared memory: it's hard to share memory
+- Isolation;
+- Large program: some programs just won't fit in memory
+
+**My Q&A of this section**:
+- Does fragmentation only occurs in Physical Memory? **R**: No! It also happens in virtual memory.
+- What is the advantage of using virtual memory? **R:** We got rid of external fragmentation.
+- Why is hard to share memory with physical memory?
+- Memory allocation must be contiguous: the whole process must fit in a contiguous space, or the Kernel can divide it? The solution was implemented using virtual memory. It is not possible to also do it in Physical memory?
+- What is the cost of using virtual memory when talking about performance? **R**: it's usually the same as read from memory (~ `50 ns - 100 ns`), since page table lives in RAM.
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
