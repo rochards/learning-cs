@@ -114,3 +114,30 @@ func DeleteTransaction(index int) {
 	printTransactionFormattedDetails(transaction)
 	fmt.Println()
 }
+
+func SummaryTransactions() {
+	if len(transactions) == 0 {
+		fmt.Println("No transactions yet!")
+		return
+	}
+
+	var totalIncome, totalExpenses float64
+	for _, transaction := range transactions {
+		if transaction.Type == Income {
+			totalIncome += transaction.Amount
+		} else if transaction.Type == Expense {
+			totalExpenses += transaction.Amount
+		}
+	}
+
+	fmt.Printf(`
+	Total income: $ %.2f
+	Total expenses: $ %.2f
+	Net balance: $ %.2f
+	`,
+		totalIncome,
+		totalExpenses,
+		totalIncome+totalExpenses,
+	)
+	fmt.Println()
+}

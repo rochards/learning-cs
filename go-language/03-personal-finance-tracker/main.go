@@ -64,7 +64,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Println("Select an option: add, list, update, delete, quit")
+		fmt.Println("Select an option (add, list, update, delete, summary, quit):")
 		var option string
 		fmt.Scan(&option)
 
@@ -100,6 +100,9 @@ func main() {
 			fmt.Scan(&index)
 
 			finance.DeleteTransaction(index)
+
+		case "summary":
+			finance.SummaryTransactions()
 
 		case "quit":
 			return
