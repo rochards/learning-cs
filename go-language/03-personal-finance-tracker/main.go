@@ -94,6 +94,13 @@ func main() {
 			}
 			finance.UpdateTransaction(index, transaction)
 
+		case "delete":
+			fmt.Println("Enter the number of the transaction: ")
+			var index int
+			fmt.Scan(&index)
+
+			finance.DeleteTransaction(index)
+
 		case "quit":
 			return
 		default:

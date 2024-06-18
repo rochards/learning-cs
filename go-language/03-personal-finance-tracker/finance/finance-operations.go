@@ -73,7 +73,7 @@ func ListTransactions() {
 func UpdateTransaction(index int, transaction Transaction) {
 	index = index - 1
 	if index < 0 || index > len(transactions)-1 {
-		fmt.Println("Invalid index. Try again")
+		fmt.Println("Invalid index. Try again!")
 		return
 	}
 
@@ -97,5 +97,20 @@ func ShowTransaction(index int) {
 
 	fmt.Printf("\nTransaction details:\n")
 	printTransactionFormattedDetails(transactions[index])
+	fmt.Println()
+}
+
+func DeleteTransaction(index int) {
+	index = index - 1
+	if index < 0 || index > len(transactions)-1 {
+		fmt.Println("Invalid index. Try again!")
+		return
+	}
+
+	transaction := transactions[index]
+	transactions = append(transactions[:index], transactions[index+1:]...)
+
+	fmt.Printf("\nDeleted transaction:\n")
+	printTransactionFormattedDetails(transaction)
 	fmt.Println()
 }
