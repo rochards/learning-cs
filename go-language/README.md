@@ -2,7 +2,7 @@
 
 Projects that I've been using to practice Go:
 - :file_folder: `01-hello` -> just a starting project;
-- :file_folder: `02-todo-list-management` -> a simple to-do project that reads standard inputs from the user where you can **add**, **list**, **remove** and **mark as concluded** to-dos:
+- :file_folder: `02-todo-list-management` -> a simple to-do project that reads standard inputs from the user where you can:
     - **add**: add a new to-do providing a description;
     - **list**: list all to-dos;
     - **complete**: mark a to-do as completed;
