@@ -298,12 +298,15 @@ It happens when free memory are scattered in small blocks across the RAM, making
 
 **Isolation**
 
+- With direct access to physical addresses, processes could attempt to load an address they aren't supposed to. Virtual memory solves this issue by completely isolating each process.
+
 **My Q&A of this section**:
 - Does fragmentation only occur in physical memory? **A**: No! It also happens in virtual memory.
 - What is the advantage of using virtual memory? **A:** We get rid of external fragmentation.
 - Why is hard to share memory with physical memory? **A** This was easier accomplished using virtual memory.
-- Memory allocation must be contiguous: should the whole process fit in a contiguous space, or the can the Kernel divide it? The solution was implemented using virtual memory. It it not possible to do this in physical memory as well?
+- Memory allocation must be contiguous: should the whole process fit in a contiguous space, or can the Kernel divide it? **A**: Actually, the kernel divides the process into pages. From the perspective of virtual memory, the process appears as contiguous in memory, but it is divided in physical memory.
 - What is the cost of using virtual memory in terms of performance? **A**: It's usually the same as reading from memory (~ `50 ns - 100 ns`), since the page table resides in RAM.
+- Is the entire process divided into pages, including the stack and heap? Do they also appear as contiguous in virtual memory but can actually be scattered in physical memory?
 
 ## Terminal commands for linux used through the course
 
