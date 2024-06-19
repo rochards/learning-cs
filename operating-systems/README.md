@@ -256,8 +256,6 @@ Take a look at simplified example of writing to memory:
 
 ### Virtual Memory
 
-**Limitations of Physical Memory**:
-
 **Fragmentation**
 
 It happens when free memory are scattered in small blocks across the RAM, making difficult to allocate contiguous blocks of memory;
@@ -289,14 +287,21 @@ It happens when free memory are scattered in small blocks across the RAM, making
 -
   - In the image above, VMA stands for Virtual Memory Address, and PA stands for Page Address, which is the physical address. Note that the page table only holds the initial address for each page. Considering that each page is 4 kB in size, the Operating System does the math to determine the ending address.
 
-- Shared memory: it's hard to share memory
-- Isolation;
-- Large program: some programs just won't fit in memory
+**Shared Memory**
+
+- Let's consider a problem: a program generates 5 processes. There will be many regions in memory with duplicated text/code. So, with virtual memory, we load the text/code once and map all virtual addresses to the same physical addresses.
+<div align="center">
+  <img src="images/anatomy-of-memory-shared-memory.png" alt="Shared memory">
+</div>
+
+- Another example: when a needed library is loaded for a program, if another program comes in and needs the same library, the OS just maps to the page where this library resides in memory for the new program's page table.
+
+**Isolation**
 
 **My Q&A of this section**:
 - Does fragmentation only occur in physical memory? **A**: No! It also happens in virtual memory.
 - What is the advantage of using virtual memory? **A:** We get rid of external fragmentation.
-- Why is hard to share memory with physical memory?
+- Why is hard to share memory with physical memory? **A** This was easier accomplished using virtual memory.
 - Memory allocation must be contiguous: should the whole process fit in a contiguous space, or the can the Kernel divide it? The solution was implemented using virtual memory. It it not possible to do this in physical memory as well?
 - What is the cost of using virtual memory in terms of performance? **A**: It's usually the same as reading from memory (~ `50 ns - 100 ns`), since the page table resides in RAM.
 
