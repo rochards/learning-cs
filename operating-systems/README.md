@@ -297,8 +297,22 @@ It happens when free memory are scattered in small blocks across the RAM, making
 - Another example: when a needed library is loaded for a program, if another program comes in and needs the same library, the OS just maps to the page where this library resides in memory for the new program's page table.
 
 **Isolation**
-
 - With direct access to physical addresses, processes could attempt to load an address they aren't supposed to. Virtual memory solves this issue by completely isolating each process.
+
+**Swap**
+- Large processes can't fit entirely in memory, so some virtual pages are put onto disk;
+- This can also be used if there are too many processes and there is not enough RAM available;
+- The OS will decide which pages to offload to disk;
+- There is a bit in the mapping that indicates whether that particular page is on disk or in RAM;
+- Remember, for the CPU, the data and code must be in RAM. So if the page isn't loaded in memory at that particular time, the OS will issue a page fault and load it from the swap file. The OS will also allocate new memory and update the new physical address in the mapping (because the page can be loaded anywhere in memory).
+
+**Summary**
+- Virtual memory addresses a lot of issues, like sharing memory, loading large processes, isolating processes, and external fragmentation;
+- Virtual memory comes with the cost of using page tables and having page faults (a kernel mode switch is needed here);
+- There is also an additional layer of translation with the MMU (Memory Management Unit), because the CPU can't read virtual addresses.
+
+**Curiosity section :nerd_face:**
+- To avoid the constant cost of reading from RAM for address translations, there is a TLB (Translation Lookaside Buffer), which is a cache for the page table.
 
 **My Q&A of this section**:
 - Does fragmentation only occur in physical memory? **A**: No! It also happens in virtual memory.
