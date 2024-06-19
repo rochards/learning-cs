@@ -265,8 +265,8 @@ It happens when free memory are scattered in small blocks across the RAM, making
   <img src="images/anatomy-of-memory-fragmentation.gif" alt="Memory fragmentation">
 </div>
 
-- External fragmentation: the image above provides a great example of external fragmentation. There is free space available between blocks, but yet the memory can't fit a new process;
-- Internal fragmentation: it happens when the blocks allocated are larger than needed, resulting in potentially free space available (because it is not being used by the process) inside the block. For example, if a process requests 18 bytes and the allocator rounds up to the nearest 32 bytes, 14 bytes are wasted within that block.
+- **External fragmentation**: the image above provides a great example of external fragmentation. There is free space available between blocks, but yet the memory can't fit a new process;
+- **Internal fragmentation**: it happens when the blocks allocated are larger than needed, resulting in potentially free space available (because it is not being used by the process) inside the block. For example, if a process requests 18 bytes and the allocator rounds up to the nearest 32 bytes, 14 bytes are wasted within that block.
 
 **Virtual Memory and Fragmentation**
 
@@ -281,8 +281,13 @@ It happens when free memory are scattered in small blocks across the RAM, making
 - `A.P2` and `C.P1` show internal fragmentation, where that portion of the process doesn't need the whole page, but it is allocated anyway. However, this solves the external fragmentation problem.
 - We map logical pages (virtual/logical addresses) to physical pages (physical addresses), and this information is stored in the **process page table**;
   - Page table is stored in memory;
-  - Each process has it own page table;
+  - Each process has it own page table that resides in somewhere in the kernel space;
+<div align="center">
+  <img src="images/anatomy-of-memory-page-table.png" alt="Page table">
+</div>
 
+-
+  - In the image above, VMA stands for Virtual Memory Address, and PA stands for Page Address, which is the physical address. Note that the page table only holds the initial address for each page. Considering that each page is 4 kB in size, the Operating System does the math to determine the ending address.
 
 - Shared memory: it's hard to share memory
 - Isolation;
