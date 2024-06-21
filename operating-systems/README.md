@@ -320,7 +320,9 @@ It happens when free memory are scattered in small blocks across the RAM, making
 - Why is hard to share memory with physical memory? **A** This was easier accomplished using virtual memory.
 - Memory allocation must be contiguous: should the whole process fit in a contiguous space, or can the Kernel divide it? **A**: Actually, the kernel divides the process into pages. From the perspective of virtual memory, the process appears as contiguous in memory, but it is divided in physical memory.
 - What is the cost of using virtual memory in terms of performance? **A**: It's usually the same as reading from memory (~ `50 ns - 100 ns`), since the page table resides in RAM.
-- Is the entire process divided into pages, including the stack and heap? Do they also appear as contiguous in virtual memory but can actually be scattered in physical memory?
+- Why processes need contiguous slots of memory? **A**: It's just a design choice that all existing OS agreed for simplicity. But remember that the process is contiguous only when we look at the virtual memory, but in physical memory the pages can be dispersed.
+- Is the entire process divided into pages, including the stack and heap? Do they also appear as contiguous in virtual memory but can actually be scattered in physical memory? If they are scattered in physical memory, does this mean that the base pointer and stack pointer registers look at the virtual addresses? **A**:
+- Who decided that a page must be 4 kB? Is it a convention for all operating systems? **A**
 
 ## Terminal commands for linux used through the course
 
