@@ -41,12 +41,6 @@ func readSalary() (float64, error) {
 	return amount, nil
 }
 
-func formatSalaryInBRL(salary float64) string {
-	salaryAsString := fmt.Sprintf("%.2f", salary)
-	salaryAsString = strings.ReplaceAll(salaryAsString, ".", ",")
-	return salaryAsString
-}
-
 func calculateINSSDeductions(salary float64) float64 {
 
 	if salary < FIRST_CEILING_RATE.income {
@@ -104,12 +98,33 @@ func calculateINSSDeductions(salary float64) float64 {
 func printFormattedINNSInfo(row int, salary, ceilingIncome, contribution, contributionTax float64) {
 	fmt.Printf("%dª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
 		row,
-		formatSalaryInBRL(salary),
-		formatSalaryInBRL(ceilingIncome),
-		formatSalaryInBRL(salary-ceilingIncome),
-		formatSalaryInBRL(contribution),
-		formatSalaryInBRL(contributionTax),
+		formatDecimalInBRL(salary),
+		formatDecimalInBRL(ceilingIncome),
+		formatDecimalInBRL(salary-ceilingIncome),
+		formatDecimalInBRL(contribution),
+		formatDecimalInBRL(contributionTax),
 	)
+}
+
+func formatDecimalInBRL(value float64) string {
+
+	parts := strings.Split(fmt.Sprintf("%.2f", value), ".")
+	integerPart := parts[0]
+	decimalPart := parts[1]
+
+	var result strings.Builder
+	integerPartLength := len(integerPart)
+	for i, digit := range integerPart {
+		if i > 0 && (integerPartLength-i)%3 == 0 {
+			result.WriteString(".")
+		}
+		result.WriteRune(digit)
+	}
+
+	result.WriteString(",")
+	result.WriteString(decimalPart)
+
+	return result.String()
 }
 
 func main() {
@@ -132,11 +147,12 @@ func main() {
 				fmt.Println("Tente novamente!")
 			}
 
+			fmt.Printf("\nSalário informado: R$ %s\n", formatDecimalInBRL(salary))
 			deductionTax := calculateINSSDeductions(salary)
 			if deductionTax > 0 {
 				// evitei retornar error na função calculateINSSDeductions para não ter que ficar lidando
 				// com erro nas chamadas recursivas
-				fmt.Println("Desconto do INSS: R$ ", formatSalaryInBRL(deductionTax))
+				fmt.Printf("==> Desconto do INSS: R$ %s\n", formatDecimalInBRL(deductionTax))
 			}
 
 		default:
