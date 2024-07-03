@@ -49,97 +49,73 @@ func formatSalaryInBRL(salary float64) string {
 
 func calculateINSSDeductions(salary float64) float64 {
 
+	if salary < FIRST_CEILING_RATE.income {
+		fmt.Println("Valor abaixo de um salário mínimo. Tente novamente!")
+		return -1
+	}
+
 	if salary > FOURTH_CEILING_RATE.income {
 		// valor acima da quarta faixa:
 		// - acima de R$ 7.786,02
-		diff := FOURTH_CEILING_RATE.income - THIRD_CEILING_RATE.income
-		partialContribution := diff * FOURTH_CEILING_RATE.contribution
+		partialTax := (FOURTH_CEILING_RATE.income - THIRD_CEILING_RATE.income) * FOURTH_CEILING_RATE.contribution
+		printFormattedINNSInfo(4, FOURTH_CEILING_RATE.income, THIRD_CEILING_RATE.income, FOURTH_CEILING_RATE.contribution, partialTax)
 
-		fmt.Printf("4ª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
-			formatSalaryInBRL(FOURTH_CEILING_RATE.income),
-			formatSalaryInBRL(THIRD_CEILING_RATE.income),
-			formatSalaryInBRL(diff),
-			formatSalaryInBRL(FOURTH_CEILING_RATE.contribution),
-			formatSalaryInBRL(partialContribution),
-		)
-		return partialContribution + calculateINSSDeductions(THIRD_CEILING_RATE.income)
+		return partialTax + calculateINSSDeductions(THIRD_CEILING_RATE.income)
 	}
 
 	if salary > THIRD_CEILING_RATE.income {
 		// valor acima do teto da terceira faixa, por tanto dentro da quarta faixa:
 		// - acima de R$ 4.000,03, até R$ 7786,02
-		diff := salary - THIRD_CEILING_RATE.income
-		partialContribution := diff * FOURTH_CEILING_RATE.contribution
+		partialTax := (salary - THIRD_CEILING_RATE.income) * FOURTH_CEILING_RATE.contribution
+		printFormattedINNSInfo(4, salary, THIRD_CEILING_RATE.income, FOURTH_CEILING_RATE.contribution, partialTax)
 
-		fmt.Printf("4ª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
-			formatSalaryInBRL(salary),
-			formatSalaryInBRL(THIRD_CEILING_RATE.income),
-			formatSalaryInBRL(diff),
-			formatSalaryInBRL(FOURTH_CEILING_RATE.contribution),
-			formatSalaryInBRL(partialContribution),
-		)
-
-		return partialContribution + calculateINSSDeductions(THIRD_CEILING_RATE.income)
+		return partialTax + calculateINSSDeductions(THIRD_CEILING_RATE.income)
 	}
 
 	if salary > SECOND_CEILING_RATE.income {
 		// valor acima do teto da segunda faixa, por tanto dentro da terceira faixa:
 		// - acima de R$ 2.666,68, até R$ 4.000,03
-		diff := salary - SECOND_CEILING_RATE.income
-		partialContribution := diff * THIRD_CEILING_RATE.contribution
+		partialTax := (salary - SECOND_CEILING_RATE.income) * THIRD_CEILING_RATE.contribution
+		printFormattedINNSInfo(3, salary, SECOND_CEILING_RATE.income, THIRD_CEILING_RATE.contribution, partialTax)
 
-		fmt.Printf("3ª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
-			formatSalaryInBRL(salary),
-			formatSalaryInBRL(SECOND_CEILING_RATE.income),
-			formatSalaryInBRL(diff),
-			formatSalaryInBRL(THIRD_CEILING_RATE.contribution),
-			formatSalaryInBRL(partialContribution),
-		)
-
-		return partialContribution + calculateINSSDeductions(SECOND_CEILING_RATE.income)
+		return partialTax + calculateINSSDeductions(SECOND_CEILING_RATE.income)
 	}
 
 	if salary > FIRST_CEILING_RATE.income {
 		// valor acima do teto da primeira faixa, por tanto dentro da segunda faixa:
 		// - acima de R$ 1.412,00, até R$ 2.666,68
-		diff := salary - FIRST_CEILING_RATE.income
-		partialContribution := diff * SECOND_CEILING_RATE.contribution
+		partialTax := (salary - FIRST_CEILING_RATE.income) * SECOND_CEILING_RATE.contribution
+		printFormattedINNSInfo(2, salary, FIRST_CEILING_RATE.income, SECOND_CEILING_RATE.contribution, partialTax)
 
-		fmt.Printf("2ª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
-			formatSalaryInBRL(salary),
-			formatSalaryInBRL(FIRST_CEILING_RATE.income),
-			formatSalaryInBRL(diff),
-			formatSalaryInBRL(SECOND_CEILING_RATE.contribution),
-			formatSalaryInBRL(partialContribution),
-		)
-
-		return partialContribution + calculateINSSDeductions(FIRST_CEILING_RATE.income)
+		return partialTax + calculateINSSDeductions(FIRST_CEILING_RATE.income)
 
 	} else {
 		// caso básico da função
 
 		// salário dentro da primeira faixa, usa-se o valor do teto para o cálculo:
 		// - até R$ 1.412,00
+		partialTax := FIRST_CEILING_RATE.income * FIRST_CEILING_RATE.contribution
+		printFormattedINNSInfo(1, FIRST_CEILING_RATE.income, 0, FIRST_CEILING_RATE.contribution, partialTax)
 
-		partialContribution := FIRST_CEILING_RATE.income * FIRST_CEILING_RATE.contribution
-
-		fmt.Printf("1ª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
-			formatSalaryInBRL(FIRST_CEILING_RATE.income),
-			formatSalaryInBRL(0),
-			formatSalaryInBRL(FIRST_CEILING_RATE.income),
-			formatSalaryInBRL(FIRST_CEILING_RATE.contribution),
-			formatSalaryInBRL(partialContribution),
-		)
-
-		return partialContribution
+		return partialTax
 	}
+}
 
+func printFormattedINNSInfo(row int, salary, ceilingIncome, contribution, contributionTax float64) {
+	fmt.Printf("%dª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
+		row,
+		formatSalaryInBRL(salary),
+		formatSalaryInBRL(ceilingIncome),
+		formatSalaryInBRL(salary-ceilingIncome),
+		formatSalaryInBRL(contribution),
+		formatSalaryInBRL(contributionTax),
+	)
 }
 
 func main() {
 
 	for {
-		fmt.Printf("\nDigite o número para escolher: \n" +
+		fmt.Printf("\nDigite um número para escolher: \n" +
 			"0 - Sair\n" +
 			"1 - Calcular taxas\n")
 		var option int
@@ -157,7 +133,11 @@ func main() {
 			}
 
 			deductionTax := calculateINSSDeductions(salary)
-			fmt.Println("Desconto do INSS: R$ ", formatSalaryInBRL(deductionTax))
+			if deductionTax > 0 {
+				// evitei retornar error na função calculateINSSDeductions para não ter que ficar lidando
+				// com erro nas chamadas recursivas
+				fmt.Println("Desconto do INSS: R$ ", formatSalaryInBRL(deductionTax))
+			}
 
 		default:
 			fmt.Println("Unknown option")
