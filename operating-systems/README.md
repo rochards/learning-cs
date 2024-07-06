@@ -366,8 +366,8 @@ MiB Swap:  100.0 total,  100.0 free,     0.0 used.   745.1 avail Mem
 - The **Swap** line represents the disk space used to extend the amount of memory:
   - The **avail Mem** info can be tricky to understand. It represents the amount of memory available before the need for swapping.
 - The **VIRT** represents in `KiB` the amount of Virtual Memory used by the process;
-- The **RES (Resident Set Size)** represents the portion of virtual memory that is currently held in RAM;
-- The **SHR** represents the Shared Memory portion used by the process, such as shared libraries.
+- The **RES (Resident Set Size)** represents in `KiB` the portion of virtual memory that is currently held in RAM;
+- The **SHR** represents in `KiB` the Shared Memory portion used by the process, such as shared libraries.
 
 In the folder `code-section4`, there are two code examples that show memory allocation: `alloc-example-1.c` and `alloc-example-2.c`. After compiling them, using `time ./<compiled-file-name>` command, we see that the `alloc-example-1.c` takes longer to run. This is because of the 1,000,000 syscalls involved. Remember: syscall involves a kernel mode switch, which takes time.
 
