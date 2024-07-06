@@ -325,6 +325,33 @@ It happens when free memory are scattered in small blocks across the RAM, making
 - If the stack are scattered in physical memory, does this mean that the base pointer and stack pointer registers look at the virtual addresses? **A**: Yes everything points to virtual memory. When the actual execution is required the MMU is consulted to do the mapping to get the content. 
 - Who decided that a page must be 4 kB? Is it a convention for all operating systems? **A**: Yes, it is a convention.
 
+### DMA (Direct Memory Access)
+
+**Peripherals read**:  
+Data from network/disk must pass through the CPU:
+- Network -> CPU -> RAM;
+- Disk -> CPU -> RAM;
+- Keyboard -> CPU -> RAM;
+
+It's slow for large transfers.
+
+**With DMA**:
+- Allows direct access from/to network/disk to/from RAM;
+- The DMA controller initializes the operation;
+- It only understands/reads physical addresses.
+
+**Pros and Cons of DMA**:
+- Efficient for large transfers;
+- No virtual memory management;
+- Less CPU overhead;
+- However, there is an initialization cost;
+- There are security concerns and complexities involved;
+- Cannot be used for interrupts (keyboard/mouse).
+
+**My Q&A of this section**:
+- Why do we need DMA, or what benefits does it bring? **A**: The benefit is usually attribute when there is a large data transfer involved.
+
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
