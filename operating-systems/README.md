@@ -358,13 +358,13 @@ Using the `top`command in Linux we're presented with information like this:
 MiB Mem :  924.2 total,  590.7 free,   111.0 used,   222.4 buff/cache
 MiB Swap:  100.0 total,  100.0 free,     0.0 used.   745.1 avail Mem
 
-  PID USER PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                          
+  PID USER PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
 18978 pi   20   0   10400   2980   2468 R   1.0   0.3  14:39.22 chrome
 ```
 - The **Mem** line is in fact the physical memory available:
--- In general, the **buff/cache** is a portion of memory that the O.S uses for optimizations like I/O management.
+  - In general, the **buff/cache** is a portion of memory that the O.S uses for optimizations like I/O management.
 - The **Swap** line represents the disk space used to extend the amount of memory:
--- The **avail Mem** info can be tricky to understand. It represents the amount of memory available before the need for swapping.
+  - The **avail Mem** info can be tricky to understand. It represents the amount of memory available before the need for swapping.
 - The **VIRT** represents in `KiB` the amount of Virtual Memory used by the process;
 - The **RES (Resident Set Size)** represents the portion of virtual memory that is currently held in RAM;
 - The **SHR** represents the Shared Memory portion used by the process, such as shared libraries.
