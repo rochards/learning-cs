@@ -312,7 +312,7 @@ It happens when free memory are scattered in small blocks across the RAM, making
 - There is also an additional layer of translation with the MMU (Memory Management Unit), because the CPU can't read virtual addresses.
 
 **Curiosity section :nerd_face:**
-- To avoid the constant cost of reading from RAM for address translations, there is a TLB (Translation Lookaside Buffer), which is a cache for the page table.
+- To avoid the constant cost of reading from RAM for address translations, there is a TLB (Translation Lookaside Buffer) in CPU, which is a cache for the page table.
 
 **My Q&A of this section**:
 - Does fragmentation only occur in physical memory? **A**: No! It also happens in virtual memory.
@@ -351,6 +351,26 @@ It's slow for large transfers.
 **My Q&A of this section**:
 - Why do we need DMA, or what benefits does it bring? **A**: The benefit is usually attribute when there is a large data transfer involved.
 
+### Lab
+
+Using the `top`command in Linux we're presented with information like this:
+```bash
+MiB Mem :  924.2 total,  590.7 free,   111.0 used,   222.4 buff/cache
+MiB Swap:  100.0 total,  100.0 free,     0.0 used.   745.1 avail Mem
+
+  PID USER PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                          
+18978 pi   20   0   10400   2980   2468 R   1.0   0.3  14:39.22 chrome
+```
+- The **Mem** line is in fact the physical memory available:
+-- In general, the **buff/cache** is a portion of memory that the O.S uses for optimizations like I/O management.
+- The **Swap** line represents the disk space used to extend the amount of memory:
+-- The **avail Mem** info can be tricky to understand. It represents the amount of memory available before the need for swapping.
+- The **VIRT** represents in `KiB` the amount of Virtual Memory used by the process;
+- The **RES (Resident Set Size)** represents the portion of virtual memory that is currently held in RAM;
+- The **SHR** represents the Shared Memory portion used by the process, such as shared libraries.
+
+In the folder `code-section4`, there are two code examples that show memory allocation: `alloc-example-1.c` and `alloc-example-2.c`. After compiling them, using `time ./<compiled-file-name>` command, we see that the `alloc-example-1.c` takes longer to run. This is because of the 1,000,000 syscalls involved. Remember: syscall involves a kernel mode switch, which takes time.
+
 
 ## Terminal commands for linux used through the course
 
@@ -361,7 +381,9 @@ To know more about any commands below, just use the `man <command-name>` in term
 - `gdb <file-name>`: to debug a compiled program. And after you executed it, you may type:
   - `start`: to begin the debugging;
   - `n`: to execute the next code instruction;
-  - `info registers`: to show the registers and current information held by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer).
+  - `info registers`: to show the registers and current information held by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer);
+- `top`: to show the executing processes in you computer with some statistics;
+- `time ./<compiled-file-name>`: to get statistic info about the program execution.
 
 ## Curiosity
 Average cost time from the CPU perspective to read data from:
