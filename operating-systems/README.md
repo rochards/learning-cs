@@ -6,6 +6,7 @@ My notes from [Fundamentals of Operating Systems](https://www.udemy.com/course/f
 - [Sections 1 and 2: Introduction](#section-1-and-section-2)
 - [Section 3: The anatomy of a process](#section-3-the-anatomy-of-a-process)
 - [Section 4: Memory Management](#section-4-memory-management)
+- [Section 5: Inside the CPU](#section-5-inside-the-cpu)
 - [Terminal commands for linux used through the course](#terminal-commands-for-linux-used-through-the-course)
 
 ## Section 1 and Section 2
@@ -371,6 +372,33 @@ MiB Swap:  100.0 total,  100.0 free,     0.0 used.   745.1 avail Mem
 
 In the folder `code-section4`, there are two code examples that show memory allocation: `alloc-example-1.c` and `alloc-example-2.c`. After compiling them, using `time ./<compiled-file-name>` command, we see that the `alloc-example-1.c` takes longer to run. This is because of the 1,000,000 syscalls involved. Remember: syscall involves a kernel mode switch, which takes time.
 
+## Section 5: Inside the CPU
+
+### CPU components and Architecture
+
+Take a look at the image below:
+<div align="center">
+  <img src="images/inside-the-cpu-basic-components.svg" alt="Basic components of a CPU">
+</div>
+
+as we know, a CPU can be composed of multiple cores, in other words, multiple CPUs whose basic components are:
+- The **ALU (Arithmetic Logic Unit)** performs the arithmetic computations: addition, multiplication, subtraction, etc., and logic operations: AND, OR, NOT, etc;
+- The **CU (Control Unit)** fetches instructions from memory, registers, decodes instructions, and coordinates the actions of the ALU;
+- The **MMU (Memory Management Unit)** translates virtual addresses to physical addresses and handles cache operations. The TLB (Translation Lookaside Buffer) resides here;
+- The **Registers** are fast units of storage for data and instructions. The ALU only executes what is here:
+  - We have general-purpose registers for storing data;
+  - We also have specific ones, like the PC (Program Counter), SP (Stack Pointer), IR (Instruction Register), and so on.
+- The **Caches (L1, L2, L3)** store frequently accessed data to speed up memory access:
+  - L3 is shared between multiple cores;
+  - L2 can be dedicated to one or more cores.
+
+**Curiosity section :nerd_face:**
+Take a look at the image below:
+<div align="center">
+  <img src="images/inside-the-cpu-memory-and-bus.png" alt="Basic components of a CPU">
+</div>
+
+DIMM1 and DIMM2 are two different slots of memory on the motherboard. Note that in this design architecture, the manufacturer decided to dedicate each DIMM to distinct CPU cores. The DSM (Distribute Shared Memory), though, allows cores to access memory across buses, which of course is slower. This is important to know because the process can be placed on any core, and due to the travel required to access data in memory, it can sometimes execute slower or faster.
 
 ## Terminal commands for linux used through the course
 
