@@ -3,9 +3,9 @@
 My notes from [Fundamentals of Operating Systems](https://www.udemy.com/course/fundamentals-of-operating-systems) course.
 
 ## Table of content
-- [Introduction](#section-1-and-section-2)
-- [The anatomy of a process](#section-3-the-anatomy-of-a-process)
-- [Memory Management](#section-4-memory-management)
+- [Sections 1 and 2: Introduction](#section-1-and-section-2)
+- [Section 3: The anatomy of a process](#section-3-the-anatomy-of-a-process)
+- [Section 4: Memory Management](#section-4-memory-management)
 - [Terminal commands for linux used through the course](#terminal-commands-for-linux-used-through-the-course)
 
 ## Section 1 and Section 2
