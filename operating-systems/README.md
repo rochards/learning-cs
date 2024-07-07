@@ -393,6 +393,7 @@ as we know, a CPU can be composed of multiple cores, in other words, multiple CP
   - L2 can be dedicated to one or more cores.
 
 **Curiosity section :nerd_face:**
+
 Take a look at the image below:
 <div align="center">
   <img src="images/inside-the-cpu-memory-and-bus.png" alt="Basic components of a CPU">
