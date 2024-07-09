@@ -8,19 +8,19 @@ import (
 	"strings"
 )
 
-type TaxRate struct {
-	income       float64
-	contribution float64
+type ContribuicaoINSS struct {
+	salarioContribuicao float64
+	aliquota            float64
 }
 
 // dados da tabela de contribuição com valores de 2024:
 // https://www.gov.br/inss/pt-br/assuntos/confira-as-aliquotas-de-contribuicao-ao-inss-com-o-aumento-do-salario-minimo
-var FIRST_CEILING_RATE = TaxRate{income: 1412, contribution: 7.5 / 100}
-var SECOND_CEILING_RATE = TaxRate{income: 2666.68, contribution: 9.0 / 100}
-var THIRD_CEILING_RATE = TaxRate{income: 4000.03, contribution: 12.0 / 100}
-var FOURTH_CEILING_RATE = TaxRate{income: 7786.02, contribution: 14.0 / 100}
+var TETO_FAIXA_1 = ContribuicaoINSS{salarioContribuicao: 1412, aliquota: 7.5 / 100}
+var TETO_FAIXA_2 = ContribuicaoINSS{salarioContribuicao: 2666.68, aliquota: 9.0 / 100}
+var TETO_FAIXA_3 = ContribuicaoINSS{salarioContribuicao: 4000.03, aliquota: 12.0 / 100}
+var TETO_FAIXA_4 = ContribuicaoINSS{salarioContribuicao: 7786.02, aliquota: 14.0 / 100}
 
-func readSalary() (float64, error) {
+func leSalario() (float64, error) {
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -33,80 +33,80 @@ func readSalary() (float64, error) {
 	cleanedInput := strings.ReplaceAll(input, ".", "")
 	cleanedInput = strings.ReplaceAll(cleanedInput, ",", ".")
 
-	amount, err := strconv.ParseFloat(strings.TrimSpace(cleanedInput), 64)
+	salario, err := strconv.ParseFloat(strings.TrimSpace(cleanedInput), 64)
 	if err != nil {
 		return 0, fmt.Errorf("entrada inválida")
 	}
 
-	return amount, nil
+	return salario, nil
 }
 
-func calculateINSSDeductions(salary float64) float64 {
+func calculaContribuicaoINSS(salario float64) float64 {
 
-	if salary < FIRST_CEILING_RATE.income {
+	if salario < TETO_FAIXA_1.salarioContribuicao {
 		fmt.Println("Valor abaixo de um salário mínimo. Tente novamente!")
 		return -1
 	}
 
-	if salary > FOURTH_CEILING_RATE.income {
+	if salario > TETO_FAIXA_4.salarioContribuicao {
 		// valor acima da quarta faixa:
 		// - acima de R$ 7.786,02
-		partialTax := (FOURTH_CEILING_RATE.income - THIRD_CEILING_RATE.income) * FOURTH_CEILING_RATE.contribution
-		printFormattedINNSInfo(4, FOURTH_CEILING_RATE.income, THIRD_CEILING_RATE.income, FOURTH_CEILING_RATE.contribution, partialTax)
+		deducaoParcial := (TETO_FAIXA_4.salarioContribuicao - TETO_FAIXA_3.salarioContribuicao) * TETO_FAIXA_4.aliquota
+		exibeCalculoINSS(4, TETO_FAIXA_4.salarioContribuicao, TETO_FAIXA_3.salarioContribuicao, TETO_FAIXA_4.aliquota, deducaoParcial)
 
-		return partialTax + calculateINSSDeductions(THIRD_CEILING_RATE.income)
+		return deducaoParcial + calculaContribuicaoINSS(TETO_FAIXA_3.salarioContribuicao)
 	}
 
-	if salary > THIRD_CEILING_RATE.income {
+	if salario > TETO_FAIXA_3.salarioContribuicao {
 		// valor acima do teto da terceira faixa, por tanto dentro da quarta faixa:
 		// - acima de R$ 4.000,03, até R$ 7786,02
-		partialTax := (salary - THIRD_CEILING_RATE.income) * FOURTH_CEILING_RATE.contribution
-		printFormattedINNSInfo(4, salary, THIRD_CEILING_RATE.income, FOURTH_CEILING_RATE.contribution, partialTax)
+		deducaoParcial := (salario - TETO_FAIXA_3.salarioContribuicao) * TETO_FAIXA_4.aliquota
+		exibeCalculoINSS(4, salario, TETO_FAIXA_3.salarioContribuicao, TETO_FAIXA_4.aliquota, deducaoParcial)
 
-		return partialTax + calculateINSSDeductions(THIRD_CEILING_RATE.income)
+		return deducaoParcial + calculaContribuicaoINSS(TETO_FAIXA_3.salarioContribuicao)
 	}
 
-	if salary > SECOND_CEILING_RATE.income {
+	if salario > TETO_FAIXA_2.salarioContribuicao {
 		// valor acima do teto da segunda faixa, por tanto dentro da terceira faixa:
 		// - acima de R$ 2.666,68, até R$ 4.000,03
-		partialTax := (salary - SECOND_CEILING_RATE.income) * THIRD_CEILING_RATE.contribution
-		printFormattedINNSInfo(3, salary, SECOND_CEILING_RATE.income, THIRD_CEILING_RATE.contribution, partialTax)
+		deducaoParcial := (salario - TETO_FAIXA_2.salarioContribuicao) * TETO_FAIXA_3.aliquota
+		exibeCalculoINSS(3, salario, TETO_FAIXA_2.salarioContribuicao, TETO_FAIXA_3.aliquota, deducaoParcial)
 
-		return partialTax + calculateINSSDeductions(SECOND_CEILING_RATE.income)
+		return deducaoParcial + calculaContribuicaoINSS(TETO_FAIXA_2.salarioContribuicao)
 	}
 
-	if salary > FIRST_CEILING_RATE.income {
+	if salario > TETO_FAIXA_1.salarioContribuicao {
 		// valor acima do teto da primeira faixa, por tanto dentro da segunda faixa:
 		// - acima de R$ 1.412,00, até R$ 2.666,68
-		partialTax := (salary - FIRST_CEILING_RATE.income) * SECOND_CEILING_RATE.contribution
-		printFormattedINNSInfo(2, salary, FIRST_CEILING_RATE.income, SECOND_CEILING_RATE.contribution, partialTax)
+		deducalParcial := (salario - TETO_FAIXA_1.salarioContribuicao) * TETO_FAIXA_2.aliquota
+		exibeCalculoINSS(2, salario, TETO_FAIXA_1.salarioContribuicao, TETO_FAIXA_2.aliquota, deducalParcial)
 
-		return partialTax + calculateINSSDeductions(FIRST_CEILING_RATE.income)
+		return deducalParcial + calculaContribuicaoINSS(TETO_FAIXA_1.salarioContribuicao)
 
 	} else {
 		// caso básico da função
 
 		// salário dentro da primeira faixa, usa-se o valor do teto para o cálculo:
 		// - até R$ 1.412,00
-		partialTax := FIRST_CEILING_RATE.income * FIRST_CEILING_RATE.contribution
-		printFormattedINNSInfo(1, FIRST_CEILING_RATE.income, 0, FIRST_CEILING_RATE.contribution, partialTax)
+		deducaoParcial := TETO_FAIXA_1.salarioContribuicao * TETO_FAIXA_1.aliquota
+		exibeCalculoINSS(1, TETO_FAIXA_1.salarioContribuicao, 0, TETO_FAIXA_1.aliquota, deducaoParcial)
 
-		return partialTax
+		return deducaoParcial
 	}
 }
 
-func printFormattedINNSInfo(row int, salary, ceilingIncome, contribution, contributionTax float64) {
+func exibeCalculoINSS(row int, salary, ceilingIncome, contribution, contributionTax float64) {
 	fmt.Printf("%dª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
 		row,
-		formatDecimalInBRL(salary),
-		formatDecimalInBRL(ceilingIncome),
-		formatDecimalInBRL(salary-ceilingIncome),
-		formatDecimalInBRL(contribution),
-		formatDecimalInBRL(contributionTax),
+		formataDecimalBRL(salary),
+		formataDecimalBRL(ceilingIncome),
+		formataDecimalBRL(salary-ceilingIncome),
+		formataDecimalBRL(contribution),
+		formataDecimalBRL(contributionTax),
 	)
 }
 
-func formatDecimalInBRL(value float64) string {
+func formataDecimalBRL(value float64) string {
 
 	parts := strings.Split(fmt.Sprintf("%.2f", value), ".")
 	integerPart := parts[0]
@@ -141,22 +141,22 @@ func main() {
 			return
 
 		case 1:
-			salary, err := readSalary()
+			salario, err := leSalario()
 			if err != nil {
 				fmt.Println("Erro: " + err.Error())
 				fmt.Println("Tente novamente!")
 			}
 
-			fmt.Printf("\nSalário informado: R$ %s\n", formatDecimalInBRL(salary))
-			deductionTax := calculateINSSDeductions(salary)
-			if deductionTax > 0 {
-				// evitei retornar error na função calculateINSSDeductions para não ter que ficar lidando
+			fmt.Printf("\nSalário informado: R$ %s\n", formataDecimalBRL(salario))
+			descontoINSS := calculaContribuicaoINSS(salario)
+			if descontoINSS > 0 {
+				// evitei retornar error na função calculaContribuicaoINSS para não ter que ficar lidando
 				// com erro nas chamadas recursivas
-				fmt.Printf("==> Desconto do INSS: R$ %s\n", formatDecimalInBRL(deductionTax))
+				fmt.Printf("==> Desconto do INSS: R$ %s\n", formataDecimalBRL(descontoINSS))
 			}
 
 		default:
-			fmt.Println("Unknown option")
+			fmt.Println("Opção desconhecida. Tente novamente!")
 		}
 	}
 }
