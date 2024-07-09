@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"main/inss"
+	"main/irpf"
 	"main/utils"
 	"os"
 	"strconv"
@@ -58,6 +59,18 @@ func main() {
 				// com erro nas chamadas recursivas
 				fmt.Printf("==> Desconto do INSS: R$ %s\n", utils.FormatDecimalInBRL(descontoINSS))
 			}
+
+			fmt.Println()
+			descontoIRPF := irpf.CalculaContribuicaoIRPF(salario, descontoINSS, 2)
+
+			salarioLiquido := salario - descontoINSS - descontoIRPF
+
+			fmt.Printf("\n==> Salário líquido: R$ %s - R$ %s - R$ %s = R$ %s\n",
+				utils.FormatDecimalInBRL(salario),
+				utils.FormatDecimalInBRL(descontoINSS),
+				utils.FormatDecimalInBRL(descontoIRPF),
+				utils.FormatDecimalInBRL(salarioLiquido),
+			)
 
 		default:
 			fmt.Println("Opção desconhecida. Tente novamente!")
