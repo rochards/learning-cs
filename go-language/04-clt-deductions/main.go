@@ -52,12 +52,10 @@ func main() {
 				fmt.Println("Tente novamente!")
 			}
 
-			fmt.Printf("\nSalário informado: R$ %s\n", utils.FormatDecimalInBRL(salario))
-			descontoINSS := inss.CalculaContribuicaoINSS(salario)
-			if descontoINSS > 0 {
-				// evitei retornar error na função calculaContribuicaoINSS para não ter que ficar lidando
-				// com erro nas chamadas recursivas
-				fmt.Printf("==> Desconto do INSS: R$ %s\n", utils.FormatDecimalInBRL(descontoINSS))
+			descontoINSS, err := inss.CalculaContribuicaoINSS(salario)
+			if err != nil {
+				fmt.Println(err)
+				return
 			}
 
 			fmt.Println()

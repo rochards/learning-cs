@@ -17,12 +17,22 @@ var TETO_FAIXA_2 = ContribuicaoINSS{salarioContribuicao: 2666.68, aliquota: 9.0 
 var TETO_FAIXA_3 = ContribuicaoINSS{salarioContribuicao: 4000.03, aliquota: 12.0 / 100}
 var TETO_FAIXA_4 = ContribuicaoINSS{salarioContribuicao: 7786.02, aliquota: 14.0 / 100}
 
-func CalculaContribuicaoINSS(salario float64) float64 {
+func CalculaContribuicaoINSS(salario float64) (float64, error) {
+
+	fmt.Println("== Cálculos referentes ao INSS ==")
+	fmt.Println("-> Salário bruto: R$ ", utils.FormatDecimalInBRL(salario))
 
 	if salario < TETO_FAIXA_1.salarioContribuicao {
-		fmt.Println("Valor abaixo de um salário mínimo. Tente novamente!")
-		return -1
+		return 0, fmt.Errorf("valor abaixo de um salário mínimo. Tente novamente")
 	}
+
+	descontoINSS := calculaINSS(salario)
+	fmt.Println("==> INSS: R$", utils.FormatDecimalInBRL(descontoINSS))
+
+	return descontoINSS, nil
+}
+
+func calculaINSS(salario float64) float64 {
 
 	if salario > TETO_FAIXA_4.salarioContribuicao {
 		// valor acima da quarta faixa:
@@ -30,7 +40,7 @@ func CalculaContribuicaoINSS(salario float64) float64 {
 		deducaoParcial := (TETO_FAIXA_4.salarioContribuicao - TETO_FAIXA_3.salarioContribuicao) * TETO_FAIXA_4.aliquota
 		exibeCalculoINSS(4, TETO_FAIXA_4.salarioContribuicao, TETO_FAIXA_3.salarioContribuicao, TETO_FAIXA_4.aliquota, deducaoParcial)
 
-		return deducaoParcial + CalculaContribuicaoINSS(TETO_FAIXA_3.salarioContribuicao)
+		return deducaoParcial + calculaINSS(TETO_FAIXA_3.salarioContribuicao)
 	}
 
 	if salario > TETO_FAIXA_3.salarioContribuicao {
@@ -39,7 +49,7 @@ func CalculaContribuicaoINSS(salario float64) float64 {
 		deducaoParcial := (salario - TETO_FAIXA_3.salarioContribuicao) * TETO_FAIXA_4.aliquota
 		exibeCalculoINSS(4, salario, TETO_FAIXA_3.salarioContribuicao, TETO_FAIXA_4.aliquota, deducaoParcial)
 
-		return deducaoParcial + CalculaContribuicaoINSS(TETO_FAIXA_3.salarioContribuicao)
+		return deducaoParcial + calculaINSS(TETO_FAIXA_3.salarioContribuicao)
 	}
 
 	if salario > TETO_FAIXA_2.salarioContribuicao {
@@ -48,7 +58,7 @@ func CalculaContribuicaoINSS(salario float64) float64 {
 		deducaoParcial := (salario - TETO_FAIXA_2.salarioContribuicao) * TETO_FAIXA_3.aliquota
 		exibeCalculoINSS(3, salario, TETO_FAIXA_2.salarioContribuicao, TETO_FAIXA_3.aliquota, deducaoParcial)
 
-		return deducaoParcial + CalculaContribuicaoINSS(TETO_FAIXA_2.salarioContribuicao)
+		return deducaoParcial + calculaINSS(TETO_FAIXA_2.salarioContribuicao)
 	}
 
 	if salario > TETO_FAIXA_1.salarioContribuicao {
@@ -57,7 +67,7 @@ func CalculaContribuicaoINSS(salario float64) float64 {
 		deducalParcial := (salario - TETO_FAIXA_1.salarioContribuicao) * TETO_FAIXA_2.aliquota
 		exibeCalculoINSS(2, salario, TETO_FAIXA_1.salarioContribuicao, TETO_FAIXA_2.aliquota, deducalParcial)
 
-		return deducalParcial + CalculaContribuicaoINSS(TETO_FAIXA_1.salarioContribuicao)
+		return deducalParcial + calculaINSS(TETO_FAIXA_1.salarioContribuicao)
 
 	} else {
 		// caso básico da função
@@ -72,7 +82,7 @@ func CalculaContribuicaoINSS(salario float64) float64 {
 }
 
 func exibeCalculoINSS(numeroFaixa int, salario, tetoFaixa, aliquota, deducao float64) {
-	fmt.Printf("%dª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
+	fmt.Printf("-> %dª faixa => R$ %s - R$ %s = R$ %s x %s = R$ %s\n",
 		numeroFaixa,
 		utils.FormatDecimalInBRL(salario),
 		utils.FormatDecimalInBRL(tetoFaixa),
