@@ -77,7 +77,7 @@ func exibeCalculoINSS(numeroFaixa int, salario, tetoFaixa, aliquota, deducao flo
 		utils.FormatDecimalInBRL(salario),
 		utils.FormatDecimalInBRL(tetoFaixa),
 		utils.FormatDecimalInBRL(salario-tetoFaixa),
-		utils.FormatDecimalInBRL(aliquota),
+		utils.FormatDecimalInBRLWithPrecision(aliquota, 3),
 		utils.FormatDecimalInBRL(deducao),
 	)
 }

@@ -62,7 +62,7 @@ func calculaIRPF(salarioBase float64, contribuicaoIRPF ContribuicaoIRPF) float64
 
 	fmt.Printf("==> IRPF: R$ %s x %s - R$ %s = R$ %s\n",
 		utils.FormatDecimalInBRL(salarioBase),
-		utils.FormatDecimalInBRL(contribuicaoIRPF.aliquota),
+		utils.FormatDecimalInBRLWithPrecision(contribuicaoIRPF.aliquota, 3),
 		utils.FormatDecimalInBRL(contribuicaoIRPF.deducao),
 		utils.FormatDecimalInBRL(impostoTotal),
 	)
