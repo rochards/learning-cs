@@ -21,7 +21,11 @@ var BASE_FAIXA_5 = ContribuicaoIRPF{valorBase: 4664.69, aliquota: 27.5 / 100, de
 
 const DEDUCAO_POR_DEPENDENTE = 189.59
 
-func CalculaContribuicaoIRPF(salario, deducaoINSS float64, numeroFilhos int) float64 {
+func CalculaContribuicaoIRPF(salario, deducaoINSS float64, numeroFilhos int) (float64, error) {
+
+	if salario < 0 {
+		return 0, fmt.Errorf("salario invalido. Tente novamente")
+	}
 
 	deducaoDependentes := DEDUCAO_POR_DEPENDENTE * float64(numeroFilhos)
 	baseCalculo := salario - deducaoINSS - deducaoDependentes
@@ -38,22 +42,22 @@ func CalculaContribuicaoIRPF(salario, deducaoINSS float64, numeroFilhos int) flo
 	)
 
 	if baseCalculo >= BASE_FAIXA_5.valorBase {
-		return calculaIRPF(baseCalculo, BASE_FAIXA_5)
+		return calculaIRPF(baseCalculo, BASE_FAIXA_5), nil
 	}
 
 	if baseCalculo >= BASE_FAIXA_4.valorBase {
-		return calculaIRPF(baseCalculo, BASE_FAIXA_4)
+		return calculaIRPF(baseCalculo, BASE_FAIXA_4), nil
 	}
 
 	if baseCalculo >= BASE_FAIXA_3.valorBase {
-		return calculaIRPF(baseCalculo, BASE_FAIXA_3)
+		return calculaIRPF(baseCalculo, BASE_FAIXA_3), nil
 	}
 
 	if baseCalculo >= BASE_FAIXA_2.valorBase {
-		return calculaIRPF(baseCalculo, BASE_FAIXA_2)
+		return calculaIRPF(baseCalculo, BASE_FAIXA_2), nil
 	}
 
-	return 0 // faixa 1 é insento
+	return 0, nil // faixa 1 é insento
 }
 
 func calculaIRPF(salarioBase float64, contribuicaoIRPF ContribuicaoIRPF) float64 {
