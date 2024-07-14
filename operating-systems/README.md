@@ -389,17 +389,55 @@ as we know, a CPU can be composed of multiple cores, in other words, multiple CP
   - We have general-purpose registers for storing data;
   - We also have specific ones, like the PC (Program Counter), SP (Stack Pointer), IR (Instruction Register), and so on.
 - The **Caches (L1, L2, L3)** store frequently accessed data to speed up memory access:
-  - L3 is shared between multiple cores;
-  - L2 can be dedicated to one or more cores.
+  - L1 is local to core;
+  - L2 is local to core, but it used to be the one shared across CPUs in absence of L3;
+  - L3 is shared between multiple cores.
+
+**CPU Architecture**:
+- RISC - Reduced Instruction Set:
+  - Instructions are simpler compared to CISC;
+  - One instruction is executed in one single CPU cycle;
+  - Lower power consume;
+  - ARM.
+  - Ex.: to execute `a = a + b` it would take 4 instructions
+  ```arm
+  LDR r0, a
+  LDR r1, b
+  ADD r0, r1
+  STR a1, r0
+  ```
+- CISC - Complex Instruction Set:
+  - One instruction takes more than one CPU cycles to be executed;
+  - Requires more power to be executed;
+  - x86 (Intel/AMD);
+  - Ex.: to execute `a = a + b` it would take 1 instruction
+  ```x86
+  ADD a, b # a and b are memory addresses
+  ```
+
+**Clock Speed**
+- It measures how fast a CPU can process an operations in cycles;
+  - 1 operation can be: fetching instructions from memory.
+- Ex.: 1 GHz is equals 1 billion cycles per second;
+- In RISC 1 cycle could mean 1 instruction executed.
 
 **Curiosity section :nerd_face:**
 
-Take a look at the image below:
+- Take a look at the image below:
 <div align="center">
   <img src="images/inside-the-cpu-memory-and-bus.png" alt="Basic components of a CPU">
 </div>
 
 DIMM1 and DIMM2 are two different slots of memory on the motherboard. Note that in this design architecture, the manufacturer decided to dedicate each DIMM to distinct CPU cores. The DSM (Distribute Shared Memory), though, allows cores to access memory across buses, which of course is slower. This is important to know because the process can be placed on any core, and due to the travel required to access data in memory, it can sometimes execute slower or faster.
+- To avoid the constant cost of reading from RAM for address translations, there is a TLB (Translation Lookaside Buffer) in CPU, which is a cache for the page table. When there is the need for context switch, it means another process wins the CPU, the TLB must be flushed;
+- In a Linux machine, type in terminal `getconf -a | grep CACHE` to check the caches size of your CPU. You will see a result like this in bytes:
+```bash
+LEVEL1_ICACHE_SIZE                 32768 # = 32 KiB for Instructions
+LEVEL1_DCACHE_SIZE                 49152 # = 48 KiB for Data
+LEVEL2_CACHE_SIZE                  1310720 # = 1280 KiB only for data
+LEVEL3_CACHE_SIZE                  12582912 # = 12 MiB only of data
+```
+
 
 ## Terminal commands for linux used through the course
 
@@ -412,7 +450,10 @@ To know more about any commands below, just use the `man <command-name>` in term
   - `n`: to execute the next code instruction;
   - `info registers`: to show the registers and current information held by those. :bulb: if you see a register pc or rip, those are the program counter (PC) or (Register Instruction Pointer);
 - `top`: to show the executing processes in you computer with some statistics;
-- `time ./<compiled-file-name>`: to get statistic info about the program execution.
+- `time ./<compiled-file-name>`: to get statistic info about the program execution;
+- `getconf -a | grep CACHE`: to get info about CPU's caches;
+- `uname -m`: to get the architecture of your CPU;
+- `lscpu`: to get a lot of info about your CPU;
 
 ## Curiosity
 Average cost time from the CPU perspective to read data from:
