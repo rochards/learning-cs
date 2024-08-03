@@ -37,7 +37,7 @@ ELF stands for Executable and Linkable Format.
 - Lives in memory;
 - Is the program in execution;
 - Uniquely identified by an ID, aka Process ID or just PID;
-- Has a Instruction Pointer, aka Program Counter, that points to the memory address for the current instruction to be executed;
+- Has an Instruction Pointer, aka Program Counter, that points to the memory address for the next instruction to be executed;
 - Has PCB (Process Control Block), a region in kernel's memory that contains metadata information about the process.
 
 Take a look on how a process lives in memory:  
@@ -59,7 +59,7 @@ Initial considerations:
 <div align="center">
   <img src="images/simplified-process-execution.gif" alt="Anatomy of a process">
 </div>
-the the execution of the remaining instructions happen the same way.
+the execution of the remaining instructions happen the same way.
 
 ### The Stack
 
@@ -421,6 +421,35 @@ as we know, a CPU can be composed of multiple cores, in other words, multiple CP
 - Ex.: 1 GHz is equals 1 billion cycles per second;
 - In RISC 1 cycle could mean 1 instruction executed.
 
+### Instruction Life Cycle
+
+- Fetch from memory (if it is not in L1 cache):
+- Decode: decode is like understanding the instruction. The CU does that;
+- Execute: the ALU does that;
+
+Look at this example:
+<div align="center">
+  <img src="images/inside-the-cpu-execution-example.gif" alt="Program execution example">
+</div>
+
+All the virtual translation were skipped for simplicity.
+Walking through the example:
+1. We have a program already loaded in memory, so it's a process;
+2. The CPU needs to execute the next instruction, so the CU "asks" the MMU for this instruction;
+3. The `pc` register is holding a virtual address that gets translated to the physical address 640 by the MMU;
+4. The MMU doesn't find this instruction in any caches, so it goes to RAM;
+5. The RAM returns 64 bytes, so the MMU updates the L caches;
+6. Now the MMU gives the CU the instruction;
+7. The CU starts decoding the instruction by converting the `sub` operation to a code understood by the ALU and also gets the actual value of the `sp` register;
+8. The CU now gives the instruction to the ALU;
+9. The ALU executes the instruction;
+10. The CU writes the result back to `sp`
+11. The `pc` gets updated;
+12. The CPU needs to execute the next instructiqon, so the CU "asks" the MMU for this instruction;
+13. The `pc` register is holding a virtual address that gets translated to the physical address 644 by the MMU;
+14. The MMU finds this instruction in cache and the cycles repeats.
+
+
 **Curiosity section :nerd_face:**
 
 - Take a look at the image below:
@@ -437,7 +466,6 @@ LEVEL1_DCACHE_SIZE                 49152 # = 48 KiB for Data
 LEVEL2_CACHE_SIZE                  1310720 # = 1280 KiB only for data
 LEVEL3_CACHE_SIZE                  12582912 # = 12 MiB only of data
 ```
-
 
 ## Terminal commands for linux used through the course
 
