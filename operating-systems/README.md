@@ -472,6 +472,7 @@ Instruction n: -----------------------------------------------------------------
 <div align="center">
   <img src="images/inside-the-cpu-hyper-threading.png" alt="Hyper threading">
 </div>
+
 before hyper-threading, there was no other way rather than to queue the processes and to execute the 2nd by the performing a context switch, as shown in the left side of the image. But with hyper-threading, as shown in the right side of the image with a single core, we get the illusion that two processes are being executed simultaneously. In fact, both are being executed without the need for a context switch. This can be achieved by:
 - Givin each process dedicated registers for only the needed ones, like `pc`, `bp`, `sp`, etc.;
 - Sharing other things like L caches at the same time;
