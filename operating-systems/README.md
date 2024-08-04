@@ -443,11 +443,39 @@ Walking through the example:
 7. The CU starts decoding the instruction by converting the `sub` operation to a code understood by the ALU and also gets the actual value of the `sp` register;
 8. The CU now gives the instruction to the ALU;
 9. The ALU executes the instruction;
-10. The CU writes the result back to `sp`
+10. The CU writes the result back to `sp`;
 11. The `pc` gets updated;
-12. The CPU needs to execute the next instructiqon, so the CU "asks" the MMU for this instruction;
+12. The CPU needs to execute the next instruction, so the CU "asks" the MMU for this instruction;
 13. The `pc` register is holding a virtual address that gets translated to the physical address 644 by the MMU;
 14. The MMU finds this instruction in cache and the cycles repeats.
+
+### Pipelining and Parallelism
+
+**Without pipelining**: Using the model proposed below, the CPU would spend most of the time idle, mainly because of the `fetch` cycle, which can take hundreds of nanoseconds for the instruction to be returned from the RAM:
+```
+Instruction 1: fetch -> decode -> execute -> write results
+Instruction 2: ------------------------------------------- fetch -> decode -> execute -> write results
+Instruction n: --------------------------------------------------------------------------------------- ...
+```
+
+**With pipelining**: this can be improved doing multiple things in parallel, so a single core/CPU can do:
+```
+Instruction 1: fetch -> decode -> execute -> write results
+Instruction 2: -------- fetch  -> decode  -> execute -> write results
+Instruction 3: ------------------ fetch   -> decode  -> execute -> write results
+Instruction n: ----------------------------------------------------------------- ...
+```
+
+**Parallelism**: we are talking about having more the one CPU in a single computer, which is very common nowadays.
+
+**Hyper-threading**: hyper-threading exposes a single core as multiple logical cores. The manufacturers found a way to present a single core as two logical cores to the OS. Look at the image below:
+<div align="center">
+  <img src="images/inside-the-cpu-hyper-threading.png" alt="Hyper threading">
+</div>
+before hyper-threading, there was no other way rather than to queue the processes and to execute the 2nd by the performing a context switch, as shown in the left side of the image. But with hyper-threading, as shown in the right side of the image with a single core, we get the illusion that two processes are being executed simultaneously. In fact, both are being executed without the need for a context switch. This can be achieved by:
+- Givin each process dedicated registers for only the needed ones, like `pc`, `bp`, `sp`, etc.;
+- Sharing other things like L caches at the same time;
+- The pipelining executing mode discussed above.
 
 
 **Curiosity section :nerd_face:**
