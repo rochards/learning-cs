@@ -496,6 +496,19 @@ LEVEL2_CACHE_SIZE                  1310720 # = 1280 KiB only for data
 LEVEL3_CACHE_SIZE                  12582912 # = 12 MiB only of data
 ```
 
+### Lab
+
+Using the `top`command in Linux we're presented with information like this:
+```bash
+%Cpu(s):  2.4 us,  0.9 sy,  0.0 ni, 96.7 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st
+```
+Let's discuss some of the metrics above:  
+- The **us (user space)** value: is the percentage of time the CPU is spending running the user's started processes;
+- The **sy (system space)** value: is the percentage of time the CPU is spending running the system/kernel processes;
+- The **id (idle)** value: is the percentage of time the CPU is processing anything;
+- The **wa (I/O wait)** value: is the percentage of time the CPU is waiting for I/O operations to complete;
+
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
