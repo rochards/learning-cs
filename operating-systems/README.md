@@ -7,6 +7,7 @@ My notes from [Fundamentals of Operating Systems](https://www.udemy.com/course/f
 - [Section 3: The anatomy of a process](#section-3-the-anatomy-of-a-process)
 - [Section 4: Memory Management](#section-4-memory-management)
 - [Section 5: Inside the CPU](#section-5-inside-the-cpu)
+- [Section 6: Process Management](#section-6-process-management)
 - [Terminal commands for linux used through the course](#terminal-commands-for-linux-used-through-the-course)
 
 ## Section 1 and Section 2
@@ -507,6 +508,32 @@ Let's discuss some of the metrics above:
 - The **sy (system space)** value: is the percentage of time the CPU is spending running the system/kernel processes;
 - The **id (idle)** value: is the percentage of time the CPU is processing anything;
 - The **wa (I/O wait)** value: is the percentage of time the CPU is waiting for I/O operations to complete;
+
+
+## Section 6: Process Management
+
+### Process vs Thread
+
+**Process**:
+- Is the program in execution;
+- Has dedicated code, stack, heap, data section;
+- Has context in the CPU (`pc`, `lr`, etc);
+- Has a PCB (Process Control Block).
+
+The **PCB** stands for Process Control Block: a region in kernel's space that contains process's metadata. About the metadata:
+- PID (Process ID);
+- Process Control info (running/stopped, priority);
+- Registers values;
+- Page Table;
+- Accounting (CPU and memory usage);
+- IO info (file descriptors);
+- IPC info;
+- Semaphores, mutexes, messages.
+
+The Kernel Process Table:
+<div align="center">
+  <img src="images/process-management-kernel-process-table.svg" alt="The Kernel Process Table">
+</div>
 
 
 ## Terminal commands for linux used through the course
