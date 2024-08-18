@@ -530,11 +530,10 @@ The **PCB** stands for Process Control Block: a region in kernel's space that co
 - IPC info;
 - Semaphores, mutexes, messages.
 
-The Kernel Process Table:
+To track PCBs, the kernel has a **Process Table**: a mapping table from PID to PCB. The Kernel Process Table in memory:
 <div align="center">
   <img src="images/process-management-kernel-process-table.svg" alt="The Kernel Process Table">
 </div>
-
 
 ## Terminal commands for linux used through the course
 
