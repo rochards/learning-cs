@@ -535,6 +535,18 @@ To track PCBs, the kernel has a **Process Table**: a mapping table from PID to P
   <img src="images/process-management-kernel-process-table.svg" alt="The Kernel Process Table">
 </div>
 
+**Thread**:
+- A unit of execution within a process;
+- All threads share code, heap, and data areas, as well as the PCB;
+- Each thread has its own stack and lives in the same VM;
+- Each thread also has its own `pc`, `sp`, and other dedicated registers;
+
+Take a look at how a process with multiple threads would look in memory:
+<div align="center">
+  <img src="images/process-management-thread-memory.png" alt="Multiple threads in memory">
+</div>
+
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
