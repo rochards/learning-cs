@@ -530,6 +530,10 @@ The **PCB** stands for Process Control Block: a region in kernel's space that co
 - IPC info;
 - Semaphores, mutexes, messages.
 
+To replicate a process, the kernel provides a system call called **fork**:
+- The OS creates an exact copy of the calling process (the parent);
+- The child process must have a new Virtual Memory, but OS uses *Copy on Write (CoW)*, so pages can be shared unless a write operation occurs.
+
 To track PCBs, the kernel has a **Process Table**: a mapping table from PID to PCB. The Kernel Process Table in memory:
 <div align="center">
   <img src="images/process-management-kernel-process-table.svg" alt="The Kernel Process Table">
@@ -545,6 +549,21 @@ Take a look at how a process with multiple threads would look in memory:
 <div align="center">
   <img src="images/process-management-thread-memory.png" alt="Multiple threads in memory">
 </div>
+
+Each thread has a **Thread Control Block (TCB)** because the kernel needs some metadata to track the threads. A TCB contains information such as:
+- TID (Thread ID);
+- Registers;
+- Thread State: running, stopped, blocked, etc.;
+- Memory Management info: e.g, a pointer to the stack, size, etc.;
+- Pointer to the parent process.
+
+To track TCBs, the kernel has a **Thread Table**: a mapping table from PID+TID to TCB. The Kernel Thread Table in memory:
+<div align="center">
+  <img src="images/process-management-kernel-thread-table.png" alt="The Kernel Thread Table">
+</div>
+
+**Curiosity section :nerd_face:**
+- PostgreSQL uses only processes to handle each client connection a client request, as well as for internal tasks.
 
 
 ## Terminal commands for linux used through the course
