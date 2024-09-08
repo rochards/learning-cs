@@ -563,7 +563,7 @@ To track TCBs, the kernel has a **Thread Table**: a mapping table from PID+TID t
 </div>
 
 **Curiosity section :nerd_face:**
-- PostgreSQL uses only processes to handle each client connection a client request, as well as for internal tasks.
+- PostgreSQL uses only processes to handle each client connection request, as well as for internal tasks.
 
 
 ## Terminal commands for linux used through the course
