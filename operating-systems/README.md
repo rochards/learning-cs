@@ -566,6 +566,65 @@ To track TCBs, the kernel has a **Thread Table**: a mapping table from PID+TID t
 - PostgreSQL uses only processes to handle each client connection request, as well as for internal tasks.
 
 
+### Context Switching
+
+The context of a process is all the information related to the process, such as:
+- Registers, (`pc`, `bp`, `pc`, etc);
+- Page tables;
+- I/O Status;
+- Etc.
+
+So, context switching is this action where the **OS** switches out the currently executing process in the CPU for another process.
+
+How it's done:
+1. The OS saves the process's context, it means all the information about the process in its PCB and TCB;
+2. The OS loads the context of the next process by restoring all the information from the PCB and TCB;
+3. This next process starts its execution from where it was paused.
+
+Possible states of a process in the OS:
+```mermaid
+stateDiagram-v2
+    %% Define states with color classes
+    state "New" as New
+    state "Ready" as Ready
+    state "Running" as Running
+    state "Blocked" as Blocked
+    state "Suspended" as Suspended
+    state "Terminated" as Terminated
+
+    %% Initial and final states
+    [*] --> New : Process created
+    Terminated --> [*] : Process ends
+
+    %% Transitions
+    New --> Ready : Initialized and ready
+    Ready --> Running : Scheduled by CPU
+    Running --> Terminated : Process completes
+    Running --> Blocked : Waiting for I/O or resource
+    Blocked --> Ready : I/O or resource available
+    Running --> Ready : Preempted by scheduler
+    Blocked --> Suspended : Swapped to disk
+    Suspended --> Blocked : Swapped back to memory
+    Suspended --> Ready : I/O completes, ready to run
+
+    %% Apply color styling
+    classDef newState fill:#FFD700,stroke:#333,stroke-width:2px
+    classDef readyState fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef runningState fill:#32CD32,stroke:#333,stroke-width:2px
+    classDef blockedState fill:#FFA500,stroke:#333,stroke-width:2px
+    classDef suspendedState fill:#D3D3D3,stroke:#333,stroke-width:2px
+    classDef terminatedState fill:#FF4500,stroke:#333,stroke-width:2px
+
+    %% Assign colors to states
+    class New newState
+    class Ready readyState
+    class Running runningState
+    class Blocked blockedState
+    class Suspended suspendedState
+    class Terminated terminatedState
+```
+
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
