@@ -568,7 +568,7 @@ To track TCBs, the kernel has a **Thread Table**: a mapping table from PID+TID t
 
 ### Context Switching
 
-The context of a process is all the information related to the process, such as:
+**Context** is a concept created by the OS. The context of a process is all the information related to the process, such as:
 - Registers, (`pc`, `bp`, `pc`, etc);
 - Page tables;
 - I/O Status;
@@ -577,9 +577,19 @@ The context of a process is all the information related to the process, such as:
 So, context switching is this action where the **OS** switches out the currently executing process in the CPU for another process.
 
 How it's done:
-1. The OS saves the process's context, it means all the information about the process in its PCB and TCB;
-2. The OS loads the context of the next process by restoring all the information from the PCB and TCB;
+1. The OS saves the process's context, it means all the information about the process in its PCB and TCB, and also flushes the TLB;
+    - There is no need to flush the TLB during threads switching of the same process, which helps make thread switching faster;
+2. The OS loads the context of the next process by restoring all the information from the PCB and TCB. This also includes loading the process's page table into the TLB;
 3. This next process starts its execution from where it was paused.
+
+Reasons why a context switching may happen:
+- The OS scheduling algorithm decided to do it:
+  - Maybe a higher-priority process became ready;
+  - The process used up its allocated CPU time slice;
+- The process called an IO operation;
+- The process performed a system call;
+- The process needs a resource that is currently unavailable;
+- The process accesses a memory page that is not in the RAM yet, causing a page fault.
 
 Possible states of a process in the OS:
 ```mermaid
