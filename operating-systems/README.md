@@ -634,6 +634,9 @@ stateDiagram-v2
     class Terminated terminatedState
 ```
 
+### Lab
+
+Inside the `code-section6` folder, there are examples of spawning threads and processes in C.
 
 ## Terminal commands for linux used through the course
 
