@@ -8,6 +8,8 @@ My notes from [Fundamentals of Operating Systems](https://www.udemy.com/course/f
 - [Section 4: Memory Management](#section-4-memory-management)
 - [Section 5: Inside the CPU](#section-5-inside-the-cpu)
 - [Section 6: Process Management](#section-6-process-management)
+- [Section 7: Storage Management](#section-7-storage-management)
+- [Section 8: Socket Management](#section-8-socket-management)
 - [Terminal commands for linux used through the course](#terminal-commands-for-linux-used-through-the-course)
 
 ## Section 1 and Section 2
@@ -638,6 +640,37 @@ stateDiagram-v2
 
 Inside the `code-section6` folder, there are examples of spawning threads and processes in C.
 
+## Section 7: Storage Management
+
+Not much in here,but maybe the **file descriptor** definition is important.
+
+### File descriptor
+In Linux, a file descriptor is basically an integer value assigned by the OS to represent an **open file or a resource**. By treating everything as a file descriptor, the application is provided with an uniform interface for interacting with various types of resources, such as:
+- Regular files(.txt, .log, etc.);
+- Directories;
+- Sockets;
+- Devices.
+
+In the example below, `fd` is the file descriptor for the opened file.
+```c
+int fd = open("example.txt", O_RDONLY);
+```
+
+The Kernel maintains a **file descriptor table** to each process - an array where each position holds the memory address of the corresponding resource. Just to illustrate, the table (array) would be something like this:
+
+| File Descriptor (int) | Pointer to Struct File (resource) | Description |
+| --------------------- | --------------------------------- | ----------- |
+| 0                     | some memory address               | Standard input STDIN |
+| 1                     | some memory address               | Standard output STDOUT |
+| 2                     | some memory address               | Standard error STDERR |
+| 3                     | some memory address               | An open file (e.g., /home/user/example.txt) |
+
+By default, every process starts with the first three file descriptors `0, 1, and 2`.
+
+:thinking: I believe that the file descriptor value corresponds to the position in the array shown above.
+
+:bulb: In Linux, you can inspect the file descriptors of a running process using tools like `ls -l /proc/<PID>/fd`.
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
@@ -653,6 +686,7 @@ To know more about any commands below, just use the `man <command-name>` in term
 - `getconf -a | grep CACHE`: to get info about CPU's caches;
 - `uname -m`: to get the architecture of your CPU;
 - `lscpu`: to get a lot of info about your CPU;
+- `ls -l /proc/<PID>/fd`: to inspect the file descriptors of a running process;
 
 ## Curiosity
 Average cost time from the CPU perspective to read data from:
