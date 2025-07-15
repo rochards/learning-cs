@@ -671,6 +671,81 @@ By default, every process starts with the first three file descriptors `0, 1, an
 
 :bulb: In Linux, you can inspect the file descriptors of a running process using tools like `ls -l /proc/<PID>/fd`.
 
+## Section 8: Socket Management
+
+### Client-Server architecture
+
+<div align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*fNu4bdqg8_9ECP3QA07hBw.png" alt="Two tier client server architecture">
+</div>
+
+Clients make calls to servers to perform some tasks. Clients can still perform some tasks, but usually in this model are lightweight tasks. But for this communication to happen we need a communication model.
+
+#### The Open Systems Interconnection (OSI) model
+
+Why do we need a communication model? There're some reasons, but I think a really important one is having agnostic applications:
+- By agnostic applications I mean that it must not have knowledge of the underlying network medium for example, so it does not need to have multiple implementation to communicate over wifi vs ethernet, vs LTE, vs fiber, and etc.
+
+<div align="center">
+  <img src="https://cf-assets.www.cloudflare.com/slt3lc6tev37/6ZH2Etm3LlFHTgmkjLmkxp/59ff240fb3ebdc7794ffaa6e1d69b7c2/osi_model_7_layers.png" alt="Two tier client server architecture">
+</div>
+
+- Layer 7 - **Application** - HTTP, FTP, gRPC;
+- Layer 6 - **Presentation** - Encoding, Serialization;
+- Layer 5 - **Session** - Connection establishment, TLS;
+- Layer 4 - **Transport** - UDP, TCP;
+- Layer 3 - **Network** - IP;
+- Layer 2 - **Data link** - Frames, mac address, ethernet, wifi;
+- Layer 1 - **Physical** - Electric signals, fiber, radio waves
+
+### Socket
+
+From the perspective of the OS, a socket is software abstraction that represents an endpoint for communication between processes, either on same machine (inter-process communication) or across a network. The complexities of communication is abstracted by the OS that handles protocol, buffering, synchronization, and etc. In Linux are represented as **file descriptors**.
+
+#### SYN and Accept Queue
+
+**Note**: **SYN** is a TCP control flag used to initiate a connection during the three-way handshake.
+
+- When a Socket is created we get two queues (the underlying implementation is actually a hash table):
+  - **SYN Queue**: that stores incoming SYNs;
+  - **Accept Queue**: that stores completed connections.
+
+#### Connection, Receive Queue and Send Queue
+
+- Completed connections are placed in the accept queue;
+- When a process "accepts", a connection is created;
+- Accept returns a **file descriptor** for the connection;
+- Two new queues is created with the connection:
+  - **Send queue**: that stores connection outgoing data;
+  - **Receive queue**: that stores incoming connection data;
+
+When we say "accept", the application calls this system call in Linux based systems:
+```
+#include <sys/socket.h>
+
+       int accept(int sockfd, struct sockaddr *_Nullable restrict addr,
+                  socklen_t *_Nullable restrict addrlen);
+```
+
+
+Representation of the process:
+```
+Process A
+|_ Socket S - a client application does not have this
+|_ S SYN Queue
+|_ S Accept Queue
+|_ Connection C
+|_ C Send Queue
+|_ C Receive Queue
+```
+
+#### Connection Establishment
+
+1. Server listens on an address:port;
+2. Client connects;
+3. Kernel does the handshake creating a connection;
+4. Backend process "accepts" the connection
+
 ## Terminal commands for linux used through the course
 
 To know more about any commands below, just use the `man <command-name>` in terminal. Ex.: `man uname`
