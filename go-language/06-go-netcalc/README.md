@@ -16,16 +16,16 @@ Given an address like `192.168.1.10/24`, it prints:
 ## Run
 
 ```bash
-go run . -cidr 192.168.1.10/24
+go run . -cidr <ipv4>/<prefix>
 ```
 
 ### Input Format
 
 - Flag: `-cidr`
 - Format: `<ipv4>/<prefix>`
-- Example: `10.0.0.15/16`
+- Example: `192.168.1.10/24`
 
-## Example Output
+### Example Output
 
 ```text
 Input:                192.168.1.10/24
@@ -44,4 +44,4 @@ Number of Host IPs:  254
 
 ## Note
 
-For production-ready CIDR parsing/validation, prefer Go's standard library parser `net.ParseCIDR(*cidr)` from the `net` package.
+For production-ready CIDR parsing/validation, there's the Go's standard library parser `net.ParseCIDR(*cidr)` from the `net` package.
